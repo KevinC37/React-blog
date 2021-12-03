@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import Navigation from './Views/Partials/Navigation';
+import Blogposts from './Views/Partials/Blogposts';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Navigation />
+    <Blogposts />
   </React.StrictMode>,
   document.getElementById('root')
 );
