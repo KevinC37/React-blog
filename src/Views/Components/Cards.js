@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { Card } from '@material-ui/core';
 import { CardActionArea } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
@@ -8,12 +8,12 @@ import { CardHeader } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import MoreVert from '@material-ui/icons/MoreVert'
+import { Link, useParams } from 'react-router-dom';
 
 function stringToColor(string) {
   let hash = 0;
   let i;
 
-  /* eslint-disable no-bitwise */
   for (i = 0; i < string.length; i += 1) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
@@ -24,7 +24,6 @@ function stringToColor(string) {
     const value = (hash >> (i * 8)) & 0xff;
     color += `00${value.toString(16)}`.substr(-2);
   }
-  /* eslint-enable no-bitwise */
 
   return color;
 }
@@ -51,7 +50,7 @@ const useStyles = makeStyles({
 
 
 
-function CardTemplate(props) {
+function WrappedComponent(props) {
   const styles = useStyles();
   const [users, setUsers] = useState([]);
   const postAuthor = {
@@ -68,7 +67,7 @@ function CardTemplate(props) {
         const users = await response.json();
         setUsers(users);
       } catch (e) {
-        console.log(e);
+        console.info(e)
         return
       }
     };
@@ -91,9 +90,11 @@ function CardTemplate(props) {
         children: `${initials[0]}${initials[1]}`,
       };
     } catch (e) {
-      console.log(e)
+      return
     }
   }
+
+  const { id } = useParams();
 
   return (
     <CssBaseline>
@@ -111,19 +112,21 @@ function CardTemplate(props) {
             </IconButton>
           }
         />
-        <CardActionArea>
-          <CardContent>
+        <Link to={`/${props.id}`}>
+          <CardActionArea>
+            <CardContent>
+              <Typography gutterBottom variant="subtitle1" component="div" color="textPrimary">
+                Here {props.title}
+              </Typography>
 
-            <Typography gutterBottom variant="subtitle1" component="div" color="textPrimary">
-              Here {props.title}
-            </Typography>
-
-          </CardContent>
-        </CardActionArea>
+            </CardContent>
+          </CardActionArea>
+        </Link>
       </Card>
     </CssBaseline>
   );
 }
+export const CardTemplate = memo(WrappedComponent);
 
 export default CardTemplate;
 

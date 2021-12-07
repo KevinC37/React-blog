@@ -6,17 +6,22 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import { BrowserRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   navlinks: {
     marginLeft: theme.spacing(10),
     display: "flex",
     cursor: "pointer",
+    listStyle: "none",
+
   },
   logo: {
     flexGrow: "1",
     cursor: "pointer",
+  },
+  logoLink: {
+    textDecoration: "none",
+    color: "white"
   },
   link: {
     textDecoration: "none",
@@ -39,28 +44,21 @@ function Navbar() {
       <CssBaseline />
       <Toolbar>
         <Typography href="#" variant="h4" className={classes.logo}>
-          Terranet
+          <Link to="/" className={classes.logoLink}>Terranet</Link>
         </Typography>
-        <BrowserRouter>
-          <div className={classes.navlinks}>
-            <Link to="/" className={classes.link}>
-              Blogposts
-            </Link>
-          </div>
-
-          <div className={classes.navlinks}>
-            <Link to="/about" className={classes.link}>
-              About
-            </Link>
-          </div>
-
-          <div className={classes.navlinks}>
-            <Link to="/contact" className={classes.link}>
-              Contact us
-            </Link>
-          </div>
-
-        </BrowserRouter>
+        <nav >
+          <ul className={classes.navlinks}>
+            <li>
+              <Link to="/" className={classes.link}>Blogposts</Link>
+            </li>
+            <li>
+              <Link to="/about" className={classes.link}>About</Link>
+            </li>
+            <li>
+              <Link to="/contact" className={classes.link}>Contact Us</Link>
+            </li>
+          </ul>
+        </nav>
       </Toolbar>
     </AppBar>
   );
