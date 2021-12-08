@@ -20,8 +20,7 @@ export default function SignIn() {
             .matches(email, "Email doesn't match")
             .required("Don't forget your email"),
     password: Yup.string()
-              .min(6, 'Password must be at least 6 characters')
-              .matches(password, "Password doesn't match")
+              .matches(password, "Wrong password")
               .required('Add your password'),
   })
   

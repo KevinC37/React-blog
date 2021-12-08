@@ -40,6 +40,7 @@ export default function SignIn() {
 
   function onSubmit(data) {
     const localStorage = window.localStorage;
+    localStorage.setItem('firstName', data.firstName);
     localStorage.setItem('email', data.email);
     localStorage.setItem('password', data.password)
 
