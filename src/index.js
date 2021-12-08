@@ -8,16 +8,20 @@ import ContactPage from './Views/Pages/Contactus';
 import NotFound from './Views/Pages/404';
 import Blogpost from './Views/Pages/Blogpost';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import {
-  TransitionGroup,
-  CSSTransition
-} from "react-transition-group";
+import LogIn from './Views/auth/components/LogIn';
+import SignUp from './Views/auth/components/SignUp'
+// import {
+//   TransitionGroup,
+//   CSSTransition
+// } from "react-transition-group";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Navigation />
       <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<LogIn />} />
         <Route exact path="/" element={<Blogposts />} />
         <Route exact path="/about" element={<AboutPage />} />
         <Route exact path="/contact" element={<ContactPage />} />

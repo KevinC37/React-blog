@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Navbar() {
   const classes = useStyles();
-
+  const auth = localStorage.getItem('auth');
+  const hasAccount = localStorage.getItem('email');
   return (
     <AppBar position="static">
       <CssBaseline />
@@ -48,6 +49,16 @@ function Navbar() {
         </Typography>
         <nav >
           <ul className={classes.navlinks}>
+            {auth ? '' : hasAccount ?
+              <li>
+                <Link to="/login" className={classes.link}>Sign in</Link>
+              </li>
+              : <li>
+                <Link to="/signup" className={classes.link}>Sign up</Link>
+              </li>
+            }
+
+
             <li>
               <Link to="/" className={classes.link}>Blogposts</Link>
             </li>

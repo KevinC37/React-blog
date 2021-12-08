@@ -8,7 +8,7 @@ import { CardHeader } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import MoreVert from '@material-ui/icons/MoreVert'
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function stringToColor(string) {
   let hash = 0;
@@ -42,41 +42,37 @@ const useStyles = makeStyles({
   },
   description: {
     alignSelf: "end"
-  },
-  avatar: {
-    backgroundColor: `${stringToColor('Cujba Mihai')}`
   }
 })
 
 
 
 function WrappedComponent(props) {
-  const styles = useStyles();
+  const styles = useStyles({});
   const [users, setUsers] = useState([]);
   const postAuthor = {
     name: '',
     company: '',
-    backgroundColor: ""
+    backgroundColor: "",
   }
 
 
   useEffect(() => {
     async function loadUsers() {
-      try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/users/');
-        const users = await response.json();
-        setUsers(users);
-      } catch (e) {
-        console.info(e)
-        return
-      }
+      const response = await fetch(`https://jsonplaceholder.typicode.com/users/${props.userId}`);
+      const users = await response.json();
+      setUsers(users);
+
     };
     loadUsers();
+
   }, [])
 
   function getPostAuthor() {
-    users.forEach(e => e.id === props.userId ? postAuthor.name = e.name : "");
-    users.forEach(e => e.id === props.userId ? postAuthor.company = e.company.name : "");
+    if (users.id === props.userId) {
+      postAuthor.name = users.name
+      postAuthor.company = users.company.name
+    }
   }
 
   getPostAuthor();
@@ -93,8 +89,6 @@ function WrappedComponent(props) {
       return
     }
   }
-
-  const { id } = useParams();
 
   return (
     <CssBaseline>
