@@ -45,7 +45,10 @@ export default function SignIn() {
     localStorage.setItem('password', data.password)
 
     setSubmitStatus(true); 
-    setTimeout(() => redirect("/login"), 2000)
+    setTimeout(() => {
+      redirect("/login");
+      window.location.reload();
+    }, 2000)
   }
 
     

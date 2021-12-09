@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -49,6 +49,7 @@ function Navbar() {
   const auth = localStorage.getItem('auth');
   const hasAccount = localStorage.getItem('email');
   const user = localStorage.getItem('firstName');
+
   return (
     <AppBar position="static">
       <CssBaseline />
@@ -59,17 +60,17 @@ function Navbar() {
         <nav >
           <ul className={classes.navlinks}>
             {auth
-              ? ""
-              : hasAccount ?
-                <li>
-                  <Link to="/login" className={classes.link}>Sign in</Link>
+              ? <li className={classes.user___profile}>
+                <ul style={{ display: 'flex' }}> <Avatar className="avatar" /> {user ? user[0].toUpperCase() + user.slice(1,) : ''}</ul>
+              </li>
+              : hasAccount
+                ? <li>
+                  <Link to="/login" className={classes.link}>Log in</Link>
                 </li>
                 : <li>
                   <Link to="/signup" className={classes.link}>Sign up</Link>
                 </li>
             }
-
-
             <li>
               <Link to="/" className={classes.link}>Blogposts</Link>
             </li>
@@ -80,11 +81,6 @@ function Navbar() {
               <Link to="/contact" className={classes.link}>Contact Us</Link>
             </li>
 
-            {hasAccount
-              ? <li className={classes.user___profile}>
-
-                <ul style={{ display: 'flex' }}> <Avatar className="avatar" /> {user ? user[0].toUpperCase() + user.slice(1,) : ''}</ul>
-              </li> : ""}
           </ul>
         </nav>
       </Toolbar>

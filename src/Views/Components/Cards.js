@@ -9,6 +9,7 @@ import { IconButton } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import MoreVert from '@material-ui/icons/MoreVert'
 import { Link } from 'react-router-dom';
+import CardMenu from './CardMenu';
 
 function stringToColor(string) {
   let hash = 0;
@@ -48,6 +49,7 @@ const useStyles = makeStyles({
 
 
 function WrappedComponent(props) {
+  const [menu, setMenu] = useState(false);
   const styles = useStyles({});
   const [users, setUsers] = useState([]);
   const postAuthor = {
@@ -101,16 +103,31 @@ function WrappedComponent(props) {
           title={postAuthor.name}
           subheader={postAuthor.company}
           action={
-            <IconButton>
+            <IconButton id="toggle___menu___button"
+              onClick={
+                (element) => {
+                  const clickEl = element.target.ownerDocument.activeElement.nodeName;
+                  if (clickEl === 'LI') {
+                    return;
+                  } else {
+                    menu ? setMenu(false) : setMenu(true);
+                  }
+                }
+
+              }>
+
               <MoreVert />
+              {menu ? <CardMenu /> : ""}
             </IconButton>
           }
+
         />
+
         <Link to={`/${props.id}`}>
           <CardActionArea>
             <CardContent>
               <Typography gutterBottom variant="subtitle1" component="div" color="textPrimary">
-                Here {props.title}
+                {props.title[0].toUpperCase() + props.title.slice(1,)}
               </Typography>
 
             </CardContent>
