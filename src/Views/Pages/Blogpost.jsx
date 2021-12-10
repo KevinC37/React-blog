@@ -1,56 +1,36 @@
 import React from "react";
-import { useEffect, useState, memo } from "react";
+import _ from 'lodash'
+import {useQueries} from 'react-query';
+import NotFound from "./404";
 
+function Blogpost() {
+  
+  const fetchPost = async () => await( await fetch(`https://jsonplaceholder.typicode.com/posts${window.location.pathname.replace('/posts','')}`)).json();
+  const fetchAuthor = async () => await ( await fetch(`https://jsonplaceholder.typicode.com/users/`)).json();
+  const [post, authors ] = useQueries([
+    {queryKey: 'post', queryFn: fetchPost},
+    {queryKey: 'author', queryFn: fetchAuthor},
+  ])
 
-function WrappedComponent() {
-  const [body, setBody] = useState('');
-  const [title, setTitle] = useState('');
-  const [user, setUser] = useState('');
-  const [userId, setUserId] = useState('');
-
-
-  function formatText(text) {
-    return text[0].toUpperCase() + text.slice(1,);
-  }
-  function getPostData() {
-
-    async function getPosts() {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/posts${window.location.pathname}`);
-      const result = await response.json();
-      setBody(formatText(result.body));
-      setTitle(formatText(result.title));
-      setUserId(result.userId);
-    };
-    getPosts();
-  }
-  useEffect( () => {
-      return  getPostData();
-    }, []
-  );
-
-  async function getUser() {
-    if(userId) {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`);
-      const result = await response.json();
-      setUser(result.name)
-
-    } else {
-      return;
-    }
-
-  };
-
-  getUser();
-
+  const formatText = (text) => _.capitalize(text);
 
   return ( 
     <div>
-    <h1>{title}</h1>
-    <h5>Posted by:  {user} </h5>
-    <p>{body}</p>
+      {_.size(post.data) === 0  ? <NotFound />
+          :  post.data && authors.data
+          ? 
+          <div>
+            <h1>{formatText(post.data.title)}</h1> 
+            <p>Author: {authors.data.map(author => author.id === post.data.userId ? author.name : '')}</p>
+            <p>{formatText(post.data.body)}</p>
+            </div>
+          : <div>Loading...</div>
+    }
+
+
     </div>
   )
 }
 
-const Blogpost = memo(WrappedComponent);
+// const Blogpost = memo(WrappedComponent);
 export default Blogpost;

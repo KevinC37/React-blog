@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useState, memo } from 'react';
 import { Card } from '@material-ui/core';
 import { CardActionArea } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
@@ -51,35 +51,6 @@ const useStyles = makeStyles({
 function WrappedComponent(props) {
   const [menu, setMenu] = useState(false);
   const styles = useStyles({});
-  const [users, setUsers] = useState([]);
-  const postAuthor = {
-    name: '',
-    company: '',
-    backgroundColor: "",
-  }
-
-
-  useEffect(() => {
-    async function loadUsers() {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/users/${props.userId}`);
-      const users = await response.json();
-      setUsers(users);
-
-    };
-    loadUsers();
-
-  }, [])
-
-  function getPostAuthor() {
-    if (users.id === props.userId) {
-      postAuthor.name = users.name
-      postAuthor.company = users.company.name
-    }
-  }
-
-  getPostAuthor();
-
-
 
   function stringAvatar(name) {
     try {
@@ -88,7 +59,7 @@ function WrappedComponent(props) {
         children: `${initials[0]}${initials[1]}`,
       };
     } catch (e) {
-      return
+      return console.error(e);
     }
   }
 
@@ -98,10 +69,10 @@ function WrappedComponent(props) {
 
         <CardHeader
           avatar={
-            <Avatar {...stringAvatar(postAuthor.name)} style={{ backgroundColor: `${stringToColor(postAuthor.name)}` }} />
+            <Avatar {...stringAvatar(props.user.name)} style={{ backgroundColor: `${stringToColor(String(props.user.name))}` }} />
           }
-          title={postAuthor.name}
-          subheader={postAuthor.company}
+          title={props.user.name}
+          subheader={props.user.company.name}
           action={
             <IconButton id="toggle___menu___button"
               onClick={
@@ -123,7 +94,7 @@ function WrappedComponent(props) {
 
         />
 
-        <Link to={`/${props.id}`}>
+        <Link to={`/posts/${props.id}`}>
           <CardActionArea>
             <CardContent>
               <Typography gutterBottom variant="subtitle1" component="div" color="textPrimary">

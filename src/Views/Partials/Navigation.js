@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     flexGrow: "1",
-    cursor: "pointer",
   },
   logoLink: {
     textDecoration: "none",
@@ -51,7 +50,7 @@ function Navbar() {
   const user = localStorage.getItem('firstName');
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <CssBaseline />
       <Toolbar>
         <Typography href="#" variant="h4" className={classes.logo}>

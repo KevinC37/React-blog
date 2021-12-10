@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Cards from "../Components/Cards"
 import { Box } from '@material-ui/core';
-
+import { useQueries } from 'react-query';
 
 function Blogposts() {
-  const [posts, setPosts] = useState([]);
+  const loadPosts = async () => await (await fetch(`https://jsonplaceholder.typicode.com/posts/`)).json();
+  const loadUsers = async () => await (await fetch(`https://jsonplaceholder.typicode.com/users/`)).json();
+  const [posts, users] = useQueries([
+    { queryKey: 'posts', queryFn: loadPosts },
+    { queryKey: 'users', queryFn: loadUsers }
+  ])
 
-  useEffect(() => {
-    async function loadPosts() {
-      try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts/');
-        const posts = await response.json();
-        setPosts(posts);
-      } catch (e) {
-        console.log(e);
-        return
-      }
-    };
-
-    loadPosts();
-  }, []);
-
+  function linkUserToPost() {
+    if (posts.status === 'success' && users.status === 'success') {
+      return posts.data.forEach(post => {
+        users.data.forEach(user => {
+          if (user.id === post.userId) post.user = user || '';
+        })
+      })
+    }
+    return;
+  }
+  linkUserToPost();
 
   return (
+
     <Box
       sx={{
         display: 'flex',
@@ -34,11 +36,14 @@ function Blogposts() {
         flexWrap: "wrap"
       }}
     >
-
-      {//loading each card available from the API
-        posts.map(e => (<Cards {...e} key={e.id}></Cards>))
-      }
+      {(posts.status === 'success' && users.status === 'success')
+        ? posts.data.map(e => {
+          return <Cards {...e} key={e.id}></Cards>
+        })
+        : <div>Loading...</div>}
     </Box>
+
   )
 }
+
 export default Blogposts;

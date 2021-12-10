@@ -14,21 +14,26 @@ import SignUp from './Views/auth/components/SignUp'
 //   TransitionGroup,
 //   CSSTransition
 // } from "react-transition-group";
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Navigation />
-      <Routes>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route exact path="/" element={<Blogposts />} />
-        <Route exact path="/about" element={<AboutPage />} />
-        <Route exact path="/contact" element={<ContactPage />} />
-        <Route path="/:slug" element={<Blogpost />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Navigation />
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route exact path="/" element={<Blogposts />} />
+          <Route exact path="/about" element={<AboutPage />} />
+          <Route exact path="/contact" element={<ContactPage />} />
+          <Route path="/posts/:slug" element={<Blogpost />} />
+
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

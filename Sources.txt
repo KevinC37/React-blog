@@ -1,0 +1,7 @@
+Routing: https://reactrouter.com/
+
+Query: https://react-query.tanstack.com/
+
+Forms: https://react-hook-form.com/
+
+Mock Data Api: https://jsonplaceholder.typicode.com/
