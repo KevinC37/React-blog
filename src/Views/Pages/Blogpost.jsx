@@ -32,5 +32,4 @@ function Blogpost() {
   )
 }
 
-// const Blogpost = memo(WrappedComponent);
 export default Blogpost;

@@ -1,0 +1,52 @@
+.edit___modal___container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(173, 173, 173, 0.35);
+  z-index: 999 !important;
+}
+
+.edit___modal___wrapper {
+  position: absolute;
+  top: 150px;
+  left: 150px;
+  right: 0;
+  bottom: 0;
+  transform: translate(50%, 0%);
+  background-color: white;
+  min-width: 35vw;
+  max-width: 55vw;
+  width: max-content;
+  max-height: 500px;
+  height: min-content;
+  padding: 10px 10px 15px 10px;
+}
+
+.edit___modal___header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dit___modal___header___title {
+}
+
+.dit___modal___header___close {
+  cursor: pointer;
+}
+
+.edit___modal___form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit___modal___form___submit___button {
+  margin-top: 10px;
+}

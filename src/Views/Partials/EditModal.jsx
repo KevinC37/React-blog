@@ -1,60 +1,83 @@
 import * as React from 'react';
-import { styled, Box } from '@material-ui/core';
-import ModalUnstyled from '@mui/base/ModalUnstyled';
+import { useState } from 'react';
+import "./EditModal.css";
+import { Portal, removePortal } from '../../utils/CreatePortal';
+import { TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import _ from 'lodash';
+import {useForm} from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import Close from '@material-ui/icons/Close';
 
-const StyledModal = styled(ModalUnstyled)`
-  position: fixed;
-  z-index: 1300;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-`;
 
-const Backdrop = styled('div')`
-  z-index: -1;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  -webkit-tap-highlight-color: transparent;
+export default function EditModal(props) {
+  const title = _.capitalize(props.title);
+  const body = _.capitalize(props.body);
+  const [postStatus, setPostStatus] = useState({status: 'Update post', btnColor: 'primary'});
+  const busEditModalState = props.busEditModalState;
 
-`;
+  /* EDIT MODAL VALIDATION */
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+            .required("Oops, the title cannot be empty"),
+    body: Yup.string()
+              .required("Don't forget to add some content"),
+  })
 
-const style = {
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  p: 2,
-  px: 4,
-  pb: 3,
-  color: 'red',
-  zIndex: 1300,
-  position: "relative",
-};
+  const formOptions = {resolver: yupResolver(validationSchema)}
 
-export default function EditModal() {
+  /* Initializing REACT-HOOKS-FORM */
+  const {register, handleSubmit, formState} = useForm(formOptions);
+  const { errors } = formState;
 
+  /* Edit post modal --- patching the data */
+  const updatePost = async (data) => await fetch(`https://jsonplaceholder.typicode.com/posts/${props.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  })
+
+  const handleForm = async e => {
+    try{
+      await updatePost(e);
+      setPostStatus({status: 'Success', btnColor: 'default'});
+    } catch (e) {
+      setPostStatus({status:`'Error': ${e}`, btnColor: 'secondary'});
+    }  
+  }
+
+  /* Closing the modal */
+  function handleClose(e) {
+    busEditModalState(e);
+    removePortal();
+  }
 
   return (
-    <div>
-      <StyledModal
-        aria-labelledby="unstyled-modal-title"
-        aria-describedby="unstyled-modal-description"
-        open={true}
-        BackdropComponent={Backdrop}
-      >
-        <Box sx={style}>
-          <h2 id="unstyled-modal-title">Text in a modal</h2>
-          <p id="unstyled-modal-description">Aliquid amet deserunt earum!</p>
-        </Box>
-      </StyledModal>
-    </div>
-  );
+    <Portal > 
+        <div className="edit___modal___container" onClick={e => e.stopPropagation()}   onMouseDown={e => e.stopPropagation()}>
+          <div className="edit___modal___wrapper" >
+            <div className="edit___modal___header">
+              <h2 className="edit___modal___header___title">Edit post</h2>
+              <Button className="edit___modal___header___close" onClick={e => handleClose(e)}>
+                <Close />
+              </Button>
+            </div>
+            <div className="edit___modal___body">
+              <form className="edit___modal___form" onSubmit={handleSubmit(handleForm)}>
+              <TextField {...register('title')} label="Title" variant="outlined"  InputLabelProps={{ shrink: true }}  defaultValue={title} margin="normal" multiline minRows={1} maxRows={2} size="small"/>
+              {errors.title ? <p>{errors.title?.message}</p> : <></>}
+              <TextField  {...register('body')} label="Body" variant="outlined" defaultValue={body} multiline minRows={4}  margin="normal" minRows={1} maxRows={10} size="medium"/>
+              {errors.body ? <p>{errors.body?.message}</p> : <></>}
+              <Button type="submit" className="edit___modal___form___submit___button" color={postStatus.btnColor} variant="contained" > {postStatus.status}</Button>
+              </form>
+             
+            </div>
+          </div>
+        </div>
+    </Portal>
+  )
 }

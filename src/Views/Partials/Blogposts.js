@@ -1,5 +1,5 @@
 import React from 'react';
-import Cards from "../Components/Cards"
+import CardTemplate from '../Components/Cards';
 import { Box } from '@material-ui/core';
 import { useQueries } from 'react-query';
 
@@ -38,7 +38,7 @@ function Blogposts() {
     >
       {(posts.status === 'success' && users.status === 'success')
         ? posts.data.map(e => {
-          return <Cards {...e} key={e.id}></Cards>
+          return <CardTemplate {...e} key={e.id}></CardTemplate>
         })
         : <div>Loading...</div>}
     </Box>

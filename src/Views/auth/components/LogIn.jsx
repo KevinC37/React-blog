@@ -60,14 +60,14 @@ export default function SignIn() {
 
 
     <Button variant="contained" type="submit" className="submit___button" color="primary">Log in</Button>
-    {    submitStatus ? <div>
+    {submitStatus 
+      ? <div>
         <Snackbar
         open={submitStatus}
         autoHideDuration={2000}
-        message="Welcome!"
-        
-      />
-          </div> : ""}
+        message="Welcome!"/>
+        </div> 
+      : ""}
     </form>
   );
 }
