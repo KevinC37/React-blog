@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card } from '@material-ui/core';
 import { CardActionArea } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
@@ -64,8 +64,6 @@ function CardTemplate(props) {
       return console.error(e);
     }
   }
-
-
 
   const busMenuState = () => {
     setMenuState(!menuState);

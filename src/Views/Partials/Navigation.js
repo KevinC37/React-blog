@@ -1,11 +1,11 @@
 import React from "react";
+import UserMenu from "../Components/UserMenu";
 import {
   AppBar,
   Toolbar,
   CssBaseline,
   Typography,
   makeStyles,
-  Avatar,
 } from "@material-ui/core";
 import "./Navigation.css"
 import { Link } from "react-router-dom";
@@ -34,23 +34,16 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "1px solid white",
     }
   },
-  user___profile: {
-    textDecoration: "none",
-    color: "white",
-    fontSize: "1rem",
-    marginLeft: theme.spacing(10),
-  },
+
 }));
 
 
 function Navbar() {
   const classes = useStyles();
-  const auth = localStorage.getItem('auth');
-  const hasAccount = localStorage.getItem('email');
-  const user = localStorage.getItem('firstName');
+
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="fixed">
       <CssBaseline />
       <Toolbar>
         <Typography href="#" variant="h4" className={classes.logo}>
@@ -58,20 +51,8 @@ function Navbar() {
         </Typography>
         <nav >
           <ul className={classes.navlinks}>
-            {auth
-              ? <li className={classes.user___profile}>
-                <ul style={{ display: 'flex' }}> <Avatar className="avatar" /> {user ? user[0].toUpperCase() + user.slice(1,) : ''}</ul>
-              </li>
-              : hasAccount
-                ? <li>
-                  <Link to="/login" className={classes.link}>Log in</Link>
-                </li>
-                : <li>
-                  <Link to="/signup" className={classes.link}>Sign up</Link>
-                </li>
-            }
             <li>
-              <Link to="/" className={classes.link}>Blogposts</Link>
+              <UserMenu />
             </li>
             <li>
               <Link to="/about" className={classes.link}>About</Link>

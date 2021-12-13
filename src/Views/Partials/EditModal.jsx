@@ -70,7 +70,7 @@ export default function EditModal(props) {
               <form className="edit___modal___form" onSubmit={handleSubmit(handleForm)}>
               <TextField {...register('title')} label="Title" variant="outlined"  InputLabelProps={{ shrink: true }}  defaultValue={title} margin="normal" multiline minRows={1} maxRows={2} size="small"/>
               {errors.title ? <p>{errors.title?.message}</p> : <></>}
-              <TextField  {...register('body')} label="Body" variant="outlined" defaultValue={body} multiline minRows={4}  margin="normal" minRows={1} maxRows={10} size="medium"/>
+              <TextField  {...register('body')} label="Body" variant="outlined" defaultValue={body} multiline minRows={4}  margin="normal" maxRows={10} size="medium"/>
               {errors.body ? <p>{errors.body?.message}</p> : <></>}
               <Button type="submit" className="edit___modal___form___submit___button" color={postStatus.btnColor} variant="contained" > {postStatus.status}</Button>
               </form>
