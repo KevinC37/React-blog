@@ -7,7 +7,7 @@ export default function SuccessSnackBar(props) {
   
   return (
   <Portal>
-    <Snackbar open={true} autoHideDuration={6000}>
+    <Snackbar sx={{marginTop: "60px"}} open={true} autoHideDuration={6000} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
     <Alert severity="success" sx={{ width: '100%' }}>
       Post with id {props.id} has been deleted successfully!
     </Alert>
