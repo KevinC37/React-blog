@@ -13,12 +13,13 @@ import { TextField, Button } from "@material-ui/core";
 import { addPostViaAPI } from "../../utils/API_CALLS/AddPost";
 import SuccessSnackBar from '../../utils/CreateSuccessSnackBar.jsx'
 import {SNACKBAR_SUCCCESS_MESSAGE_TYPE} from '../../GlobalVars/index.js'
+import "../Styles/Components/AddPost.css"
 
 export default function AddPost() {
   const [postAddedStatus, setPostAddedStatus] = useState(false); //for triggering the 'Success' popup
   const [postID, setPostID] = useState(null);
   const [userID, setUserID] = useState(null)
- 
+  const [postStatus, setPostStatus] = useState({status: 'Add post', btnColor: 'primary', disabled: false});
 
   const redirect = useNavigate();
 
@@ -89,7 +90,14 @@ export default function AddPost() {
 
 async function onSubmit(data) {
     const post = {userId: userID, id: postID, title: data.title, body: data.body}
-    submitData(post);
+
+    try{
+      await submitData(post);;
+      setPostStatus({status: 'Success! Post added', btnColor: 'default', disabled: true});
+    } catch (e) {
+      setPostStatus({status:`'Error': ${e}`, btnColor: 'secondary', disabled: false});
+    }  
+   
 
     setTimeout(() => {
       redirect("/");
@@ -110,7 +118,7 @@ async function onSubmit(data) {
      {errors.body && <p>{errors.body?.message}</p>}
 
 
-    <Button variant="contained" type="submit" className="submit___button" color="primary">Submit post</Button>
+     <Button className="submit___button" type="submit" color={postStatus.btnColor} disabled={postStatus.disabled} variant="contained" > {postStatus.status}</Button>
     {postAddedStatus 
       ? <div>
         <SuccessSnackBar id={postID}  actionType={SNACKBAR_SUCCCESS_MESSAGE_TYPE.ADD}/>

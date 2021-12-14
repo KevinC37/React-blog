@@ -16,7 +16,7 @@ import { Avatar } from "@mui/material";
 import Home from '@material-ui/icons/Home';
 
 /* Local Imports*/
-import "../../Styles/Navigation/Navigation.css";
+import "../../../Styles/Navigation/Navigation.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {

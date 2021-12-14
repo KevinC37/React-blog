@@ -1,5 +1,5 @@
 import React from "react";
-import UserMenu from "./UserMenu";
+import UserMenu from "../Partials/Navigation/UserMenu.jsx";
 import {
   AppBar,
   Toolbar,
