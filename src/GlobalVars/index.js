@@ -1,0 +1,1 @@
+export const SNACKBAR_SUCCCESS_MESSAGE_TYPE = { DELETE: 'deleted', POST: 'posted', ADD: 'added' };

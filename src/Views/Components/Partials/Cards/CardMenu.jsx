@@ -1,11 +1,16 @@
 import * as React from 'react';
 import { useState } from 'react';
+
+/* Material UI Imports */
 import { MenuItem } from '@material-ui/core';
 import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
-import './CardMenu.css';
-import EditModal from '../Partials/EditModal';
-import SuccessSnackBar from '../Partials/SuccessSnackBar';
+
+/* Local Imports */
+import EditModal from '../Modals/EditModal.jsx';
+import '../../../Styles/Components/Cards/CardMenu.css';
+import SuccessSnackBar from '../../../../utils/CreateSuccessSnackBar';
+import { SNACKBAR_SUCCCESS_MESSAGE_TYPE } from '../../../../GlobalVars';
 
 
 
@@ -59,7 +64,7 @@ export default function CardMenu(props) {
         </MenuItem>
       </div>
     </div>
-    { postDeleteStatus ? <SuccessSnackBar id={props.id} /> : ''}
+    { postDeleteStatus ? <SuccessSnackBar id={props.id} actionType={SNACKBAR_SUCCCESS_MESSAGE_TYPE.DELETE} /> : ''}
     {editModalState ? <EditModal {...props} editModalState={editModalState}  busEditModalState={e => busEditModalState(e)}/> : <></>}
     </div>
   )

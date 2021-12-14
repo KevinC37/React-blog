@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
+import { Link } from 'react-router-dom';
+import _ from 'lodash';
+
+
+/* Material UI Imports */
 import { Card } from '@material-ui/core';
 import { CardActionArea } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
@@ -8,9 +13,9 @@ import { CardHeader } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import MoreVert from '@material-ui/icons/MoreVert'
-import { Link } from 'react-router-dom';
-import _ from 'lodash';
-import CardMenu from './CardMenu';
+
+/* Local imports */
+import CardMenu from '../Partials/Cards/CardMenu';
 
 
 function stringToColor(string) {
@@ -50,9 +55,10 @@ const useStyles = makeStyles({
 
 
 
-function CardTemplate(props) {
+function WrappedComponent(props) {
   const styles = useStyles({});
   const [menuState, setMenuState] = useState(false);
+
 
   function stringAvatar(name) {
     try {
@@ -65,7 +71,9 @@ function CardTemplate(props) {
     }
   }
 
-  const busMenuState = () => {
+
+
+  const toggleMenu = () => {
     setMenuState(!menuState);
   }
 
@@ -73,17 +81,19 @@ function CardTemplate(props) {
   return (
     <CssBaseline>
       <Card id={`blogpost_id_${props.id}`} className={styles.card}>
+
         <CardHeader
           avatar={<Avatar {...stringAvatar(props.user.name)} style={{ backgroundColor: `${stringToColor(String(props.user.name))}` }} />}
           title={props.user.name}
           subheader={props.user.company.name}
           action={
-            <IconButton id="toggle___menu___button" onClick={busMenuState}>
+            <IconButton id="toggle___menu___button" onClick={toggleMenu}>
               <MoreVert />
-              <CardMenu key={props.id} {...props} menuState={menuState} busMenuState={busMenuState} hidden="true" />
             </IconButton>
           }
         />
+
+        {menuState ? <CardMenu key={props.id} {...props} onClick={toggleMenu.bind(this)} /> : <></>}
 
         <Link to={`/posts/${props.id}`}>
           <CardActionArea>
@@ -99,8 +109,12 @@ function CardTemplate(props) {
     </CssBaseline>
   );
 }
+WrappedComponent.prototype.toggleMenu = function () {
+  return false;
+}
 
 
+export const CardMain = memo(WrappedComponent);
 
-export default CardTemplate;
+export default CardMain;
 

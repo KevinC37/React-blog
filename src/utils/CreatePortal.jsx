@@ -11,8 +11,13 @@ export const Portal = ({ children, className = 'root-portal', el = 'div' }) => {
   });
 
   React.useEffect(() => {
-    container.classList.add(className)
-    document.body.appendChild(container)
+    container.classList.add(className);
+    document.body.appendChild(container);
+
+    return () => {
+      container.remove();
+    }
+
   }, [className, container])
 
   return ReactDOM.createPortal(children, container);

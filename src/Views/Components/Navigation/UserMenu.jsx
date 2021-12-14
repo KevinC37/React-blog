@@ -2,20 +2,21 @@ import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import _ from 'lodash';
-import "./UserMenu.css";
 
+/* Material UI Imports*/
 import Add from '@material-ui/icons/Add'
 import { Menu } from "@material-ui/core";
 import { MenuItem } from "@material-ui/core";
 import Person from "@material-ui/icons/Person";
 import { ListItemIcon } from "@material-ui/core";
-import PersonAdd from '@material-ui/icons/PersonAdd';
-import Settings from '@material-ui/icons/Settings';
 import { Divider } from "@material-ui/core";
 import Logout from '@mui/icons-material/Logout';
 import { makeStyles } from "@material-ui/core";
 import { Avatar } from "@mui/material";
+import Home from '@material-ui/icons/Home';
 
+/* Local Imports*/
+import "../../Styles/Navigation/Navigation.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,14 +59,25 @@ export default function UserMenu() {
    
  
     <Menu open={open} anchorEl={anchorEl} onClick={handleClose} disableScrollLock>
+    
+      <Link to="/">
+        <MenuItem>
+          <ListItemIcon>
+            <Home/> 
+          </ListItemIcon>
+          Home
+        </MenuItem>
+      </Link>
 
+      <Link to="/add-post">
       <MenuItem>
       <ListItemIcon>
         <Add/> 
       </ListItemIcon>
         Add post
       </MenuItem>
-
+      </Link>
+      
       <MenuItem>
       <ListItemIcon>
         <Person /> 

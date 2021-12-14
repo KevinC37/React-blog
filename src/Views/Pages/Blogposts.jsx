@@ -2,7 +2,7 @@ import React from "react";
 import _ from 'lodash'
 import {useQueries} from 'react-query';
 import NotFound from "./404";
-import "../../styles/main.css";
+import "../Styles/body.css";
 
 function Blogpost() {
   

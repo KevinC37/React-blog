@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState } from 'react';
 import { Card } from '@material-ui/core';
 import { CardActionArea } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
@@ -11,9 +11,6 @@ import MoreVert from '@material-ui/icons/MoreVert'
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import CardMenu from './CardMenu';
-
-
-
 
 function stringToColor(string) {
   let hash = 0;
@@ -52,10 +49,9 @@ const useStyles = makeStyles({
 
 
 
-function WrappedComponent(props) {
+function CardTemplate(props) {
   const styles = useStyles({});
   const [menuState, setMenuState] = useState(false);
-
 
   function stringAvatar(name) {
     try {
@@ -68,9 +64,7 @@ function WrappedComponent(props) {
     }
   }
 
-
-
-  const toggleMenu = () => {
+  const busMenuState = () => {
     setMenuState(!menuState);
   }
 
@@ -78,19 +72,17 @@ function WrappedComponent(props) {
   return (
     <CssBaseline>
       <Card id={`blogpost_id_${props.id}`} className={styles.card}>
-
         <CardHeader
           avatar={<Avatar {...stringAvatar(props.user.name)} style={{ backgroundColor: `${stringToColor(String(props.user.name))}` }} />}
           title={props.user.name}
           subheader={props.user.company.name}
           action={
-            <IconButton id="toggle___menu___button" onClick={toggleMenu}>
+            <IconButton id="toggle___menu___button" onClick={busMenuState}>
               <MoreVert />
+              <CardMenu key={props.id} {...props} menuState={menuState} busMenuState={busMenuState} hidden="true" />
             </IconButton>
           }
         />
-
-        {menuState ? <CardMenu key={props.id} {...props} onClick={toggleMenu.bind(this)} /> : <></>}
 
         <Link to={`/posts/${props.id}`}>
           <CardActionArea>
@@ -106,12 +98,8 @@ function WrappedComponent(props) {
     </CssBaseline>
   );
 }
-WrappedComponent.prototype.toggleMenu = function () {
-  return false;
-}
 
 
-export const CardMain = memo(WrappedComponent);
 
-export default CardMain;
+export default CardTemplate;
 

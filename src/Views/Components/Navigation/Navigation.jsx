@@ -1,5 +1,5 @@
 import React from "react";
-import UserMenu from "../Components/UserMenu";
+import UserMenu from "./UserMenu";
 import {
   AppBar,
   Toolbar,
@@ -7,15 +7,17 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import "./Navigation.css"
+
 import { Link } from "react-router-dom";
+
+import "../../Styles/Navigation/Navigation.css";
+
 const useStyles = makeStyles((theme) => ({
   navlinks: {
     marginLeft: theme.spacing(10),
     display: "flex",
     cursor: "pointer",
     listStyle: "none",
-
   },
   logo: {
     flexGrow: "1",

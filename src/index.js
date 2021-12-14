@@ -6,14 +6,15 @@ import store from './storage/store.js';
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
-import Navigation from './Views/Partials/Navigation';
-import Blogposts from './Views/Partials/Blogposts';
+import Navigation from './Views/Components/Navigation/Navigation.jsx';
+import Blogposts from './Views/Components/Home/Blogposts.jsx';
 import AboutPage from './Views/Pages/About';
 import ContactPage from './Views/Pages/Contactus';
 import NotFound from './Views/Pages/404';
-import Blogpost from './Views/Pages/Blogpost';
-import LogIn from './Views/auth/components/LogIn';
-import SignUp from './Views/auth/components/SignUp'
+import Blogpost from './Views/Pages/Blogposts';
+import LogIn from './Views/Components/Auth/LogIn';
+import SignUp from './Views/Components/Auth/SignUp'
+import AddPost from './Views/Pages/AddPost.jsx';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -35,6 +36,7 @@ ReactDOM.render(
             <Route exact path="/about" element={<AboutPage />} />
             <Route exact path="/contact" element={<ContactPage />} />
             <Route path="/posts/:slug" element={<Blogpost />} />
+            <Route path="/add-post" element={<AddPost />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
-import "./EditModal.css";
-import { Portal, removePortal } from '../../utils/CreatePortal';
+
+/* Material UI Imports */
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import _ from 'lodash';
@@ -10,6 +10,10 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Close from '@material-ui/icons/Close';
 
+
+/* Local Imports */
+import "../../../Styles/Modals/EditModal.css";
+import { Portal, removePortal } from '../../../../utils/CreatePortal';
 
 
 export default function EditModal(props) {

@@ -1,7 +1,11 @@
 import React from 'react';
-import CardTemplate from '../Components/Cards';
-import { Box } from '@material-ui/core';
 import { useQueries } from 'react-query';
+
+/* Material UI Imports */
+import { Box } from '@material-ui/core';
+
+/* Local imports */
+import CardTemplate from '../Partials/Cards/Cards.jsx';
 
 function Blogposts() {
   const loadPosts = async () => await (await fetch(`https://jsonplaceholder.typicode.com/posts/`)).json();

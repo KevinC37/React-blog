@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import './SignUp.css';
+import '../../Styles/Auth_Pages/SignUp.css';
 import { TextField, Button } from "@material-ui/core";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -35,15 +35,15 @@ export default function SignIn() {
   const redirect = useNavigate();
   const [submitStatus, setSubmitStatus] = useState(false); //for triggering the 'Success' popup
 
-
-       
+      
 
   function onSubmit(data) {
     const localStorage = window.localStorage;
     localStorage.setItem('firstName', data.firstName);
+    localStorage.setItem('lastName', data.lastName);
     localStorage.setItem('email', data.email);
     localStorage.setItem('password', data.password)
-
+    
     setSubmitStatus(true); 
     setTimeout(() => {
       redirect("/login");

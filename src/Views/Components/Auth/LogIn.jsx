@@ -1,13 +1,19 @@
 import * as React from "react";
-import { useForm } from "react-hook-form";
-import './SignUp.css';
-import { TextField, Button } from "@material-ui/core";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+/* React forms imports */
+import { useForm } from "react-hook-form";
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+
+/* Material UI Imports */
+import { TextField, Button } from "@material-ui/core";
 import { Snackbar } from "@material-ui/core";
 
+/* Local imports */
+import '../../Styles/Auth_Pages/LogIn.css';
 
 
 export default function SignIn() {
