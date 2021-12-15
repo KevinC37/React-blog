@@ -12,6 +12,7 @@ import Home from '@material-ui/icons/Home';
 
 /* Local Imports*/
 import '../../../Styles/Navigation/Navigation.css';
+import logout from '../../../../utils/LocalStorage/Logout';
 
 export const NavMenu = forwardRef((props, ref) => {
   const [anchorEl, setAnchorEl] = useState(ref);
@@ -53,7 +54,7 @@ export const NavMenu = forwardRef((props, ref) => {
 
       <Divider />
 
-      <MenuItem>
+      <MenuItem onClick={logout}>
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>

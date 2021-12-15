@@ -9,6 +9,7 @@ import { Avatar } from '@mui/material';
 
 /* Local imports */
 import { NavMenu } from './NavMenu.jsx';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   user___profile: {
@@ -38,9 +39,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavList() {
   const classes = useStyles();
-  const auth = localStorage.getItem('auth');
-  const hasAccount = localStorage.getItem('email');
-  const user = localStorage.getItem('firstName');
+  const [isAuth, setIsAuth] = useState(null);
+  const [hasAcc, setHasAcc] = useState(null);
+  const [userName, setUserName] = useState(null);
+
   const reference = useRef(null);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -55,25 +57,31 @@ export default function NavList() {
     return setAnchorEl(null);
   }
 
+  useEffect(() => {
+    setIsAuth(JSON.parse(localStorage.getItem('auth')));
+    setHasAcc(localStorage.getItem('email'));
+    setUserName(localStorage.getItem('firstName'));
+  }, [isAuth]);
+
   return (
     <>
       <ul className={classes.navlinks}>
         <li>
-          {auth ? (
+          {isAuth ? (
             <div
               ref={reference}
               onClick={(e) => handleClick(e)}
               className={classes.user___profile}
             >
               <Avatar className="avatar" />
-              <span>{user ? _.capitalize(user) : ''}</span>
+              <span>{userName ? _.capitalize(userName) : ''}</span>
               {anchorEl ? (
                 <NavMenu handleClose={handleClose} ref={anchorEl} />
               ) : (
                 <></>
               )}
             </div>
-          ) : hasAccount ? (
+          ) : hasAcc ? (
             <Link to="/login" className={classes.link}>
               Log in
             </Link>

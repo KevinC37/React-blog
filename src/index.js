@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './storage/store.js';
 
+
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import Navigation from './Views/Components/Navigation/Navigation.jsx';
@@ -17,7 +18,11 @@ import SignUp from './Views/Components/Auth/SignUp'
 import AddPost from './Views/Pages/AddPost.jsx';
 
 import reportWebVitals from './reportWebVitals';
+import { ADD_POSTS_TO_LOCAL_STORAGE } from './utils/LocalStorage/InitializeEmptyStorage.js';
 
+
+
+ADD_POSTS_TO_LOCAL_STORAGE();
 
 const queryClient = new QueryClient({
   defaultOptions: {

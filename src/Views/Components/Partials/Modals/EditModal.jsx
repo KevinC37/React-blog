@@ -50,7 +50,6 @@ export default function EditModal(props) {
     try {
       await updatePost(e);
       setPostStatus({ status: 'Success', btnColor: 'default' });
-
       UpdatePostInLocalStorage(props, e);
     } catch (e) {
       setPostStatus({ status: `'Error': ${e}`, btnColor: 'secondary' });
