@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import _ from 'lodash';
@@ -8,8 +8,7 @@ import { makeStyles } from '@material-ui/core';
 import { Avatar } from '@mui/material';
 
 /* Local imports */
-import UserMenu from './UserMenu.jsx';
-import { NavMenu } from './UserMenu.jsx';
+import { NavMenu } from './NavMenu.jsx';
 
 const useStyles = makeStyles((theme) => ({
   user___profile: {

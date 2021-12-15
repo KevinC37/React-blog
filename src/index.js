@@ -32,26 +32,24 @@ const queryClient = new QueryClient({
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Navigation />
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<LogIn />} />
-            <Route exact path="/" element={<Blogposts />} />
-            <Route exact path="/about" element={<AboutPage />} />
-            <Route exact path="/contact" element={<ContactPage />} />
-            <Route path="/posts/:slug" element={<Blogpost />} />
-            <Route path="/add-post" element={<AddPost />} />
-          </Routes>
-        </BrowserRouter>
-      </QueryClientProvider>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Navigation />
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route exact path="/" element={<Blogposts />} />
+          <Route exact path="/about" element={<AboutPage />} />
+          <Route exact path="/contact" element={<ContactPage />} />
+          <Route path="/posts/:slug" element={<Blogpost />} />
+          <Route path="/add-post" element={<AddPost />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
+  </Provider>
+  , document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

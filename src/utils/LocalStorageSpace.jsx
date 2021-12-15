@@ -14,7 +14,6 @@ var storageIsFull = function () {
   var size = localStorageSpace(); // old size
 
   // try to add data
-  var er;
   try {
     window.localStorage.setItem('test-size', '1');
   } catch (er) {}

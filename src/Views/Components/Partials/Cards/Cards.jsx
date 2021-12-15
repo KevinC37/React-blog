@@ -7,7 +7,7 @@ import { makeStyles, CssBaseline } from '@material-ui/core';
 import { CardHeader } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
-import MoreVert from '@material-ui/icons/MoreVert'
+import MoreVert from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import CardMenu from './CardMenu';
@@ -32,35 +32,32 @@ function stringToColor(string) {
 
 const useStyles = makeStyles({
   card: {
-    width: "350px",
-    height: "150px",
-    margin: "10px",
+    width: '350px',
+    height: '150px',
+    margin: '10px',
     position: 'relative',
   },
   image: {
     maxWidth: '350px',
-    maxHeight: "350px",
-    height: "350px"
+    maxHeight: '350px',
+    height: '350px',
   },
   description: {
-    alignSelf: "end"
-  }
-})
-
-
+    alignSelf: 'end',
+  },
+});
 
 function CardTemplate(props) {
   const styles = useStyles({});
   const [menuState, setMenuState] = useState(false);
   const [companyName, setCompanyName] = useState('');
   useEffect(() => {
-    if ( typeof props.user == undefined) {
+    if (typeof props.user == undefined) {
       return setCompanyName(props.user.company.name);
     } else {
       return setCompanyName('Terranet');
     }
-    
-  }, [])
+  }, [props.user]);
 
   function stringAvatar(name) {
     try {
@@ -75,20 +72,34 @@ function CardTemplate(props) {
 
   const busMenuState = () => {
     setMenuState(!menuState);
-  }
-
+  };
 
   return (
     <CssBaseline>
       <Card id={`blogpost_id_${props.id}`} className={styles.card}>
         <CardHeader
-          avatar={<Avatar {...stringAvatar(props.author || props.user.name )} style={{ backgroundColor: `${stringToColor(String(props.author || props.user.name))}` }} />}
+          avatar={
+            <Avatar
+              {...stringAvatar(props.author || props.user.name)}
+              style={{
+                backgroundColor: `${stringToColor(
+                  String(props.author || props.user.name)
+                )}`,
+              }}
+            />
+          }
           title={props.author || props.user.name}
           subheader={companyName}
           action={
             <IconButton id="toggle___menu___button" onClick={busMenuState}>
               <MoreVert />
-              <CardMenu key={props.id} {...props} menuState={menuState} busMenuState={busMenuState} hidden="true" />
+              <CardMenu
+                key={props.id}
+                {...props}
+                menuState={menuState}
+                busMenuState={busMenuState}
+                hidden="true"
+              />
             </IconButton>
           }
         />
@@ -96,10 +107,14 @@ function CardTemplate(props) {
         <Link to={`/posts/${props.id}`}>
           <CardActionArea>
             <CardContent>
-              <Typography gutterBottom variant="subtitle1" component="div" color="textPrimary">
+              <Typography
+                gutterBottom
+                variant="subtitle1"
+                component="div"
+                color="textPrimary"
+              >
                 {_.capitalize(props.title)}
               </Typography>
-
             </CardContent>
           </CardActionArea>
         </Link>
@@ -108,7 +123,4 @@ function CardTemplate(props) {
   );
 }
 
-
-
 export default CardTemplate;
-
