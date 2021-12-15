@@ -52,7 +52,7 @@ function CardTemplate(props) {
   const [menuState, setMenuState] = useState(false);
   const [companyName, setCompanyName] = useState('');
   useEffect(() => {
-    if (typeof props.user == undefined) {
+    if (typeof props.user !== 'undefined') {
       return setCompanyName(props.user.company.name);
     } else {
       return setCompanyName('Terranet');
