@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import { useNavigate } from "react-router";
 
 /* React forms imports */
 import { useForm } from "react-hook-form";
@@ -8,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 /* Material UI Imports */
 import { TextField, Button } from "@material-ui/core";
+
 
 /* Local imports */
 import { addPostViaAPI } from "../../utils/API_CALLS/AddPost";
@@ -20,8 +20,6 @@ export default function AddPost() {
   const [postID, setPostID] = useState(null);
   const [userID, setUserID] = useState(null)
   const [postStatus, setPostStatus] = useState({status: 'Add post', btnColor: 'primary', disabled: false});
-
-  const redirect = useNavigate();
 
   const validationSchema = Yup.object().shape({
     title: Yup.string()
@@ -53,7 +51,7 @@ export default function AddPost() {
         const json = responses.map((response) => response.json());
         return Promise.all(json);
       })
-      .then(data => data.forEach( (datum, index) => (index === 0) ? setPostID(datum.length) : setUserID(datum.length)))
+      .then(data => data.forEach( (datum, index) => (index === 0) ? setPostID(Date.now()) : setUserID(datum.length + 1)))
       .catch((errors) => {
         errors.forEach((error) => console.error(error));
       });
@@ -62,13 +60,8 @@ export default function AddPost() {
   };
 
   useEffect(() => {
-    getData()
+    getData();
   }, [])
-
-
-
-
-
 
   const pushPostToLocalStorage = (post) => {
     const getPostAddedStore =  Object.values(JSON.parse(window.localStorage.getItem('POSTS_ADDED') || '[]'));
@@ -87,7 +80,6 @@ export default function AddPost() {
     setPostAddedStatus(true);
    }
 
-
 async function onSubmit(data) {
     const post = {userId: userID, id: postID, title: data.title, body: data.body}
 
@@ -97,14 +89,10 @@ async function onSubmit(data) {
     } catch (e) {
       setPostStatus({status:`'Error': ${e}`, btnColor: 'secondary', disabled: false});
     }  
-   
-
-    setTimeout(() => {
-      redirect("/");
-    }, 6000)
+       
 }
 
-    
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form___main">

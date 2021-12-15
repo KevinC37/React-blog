@@ -1,69 +1,43 @@
-import React from "react";
-import UserMenu from "../Partials/Navigation/UserMenu.jsx";
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+/* MUI Imports */
 import {
   AppBar,
   Toolbar,
   CssBaseline,
   Typography,
   makeStyles,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { Link } from "react-router-dom";
-
-import "../../Styles/Navigation/Navigation.css";
+/* Local imports */
+import '../../Styles/Navigation/Navigation.css';
+import NavList from '../Partials/Navigation/NavList.jsx';
 
 const useStyles = makeStyles((theme) => ({
-  navlinks: {
-    marginLeft: theme.spacing(10),
-    display: "flex",
-    cursor: "pointer",
-    listStyle: "none",
-  },
   logo: {
-    flexGrow: "1",
+    flexGrow: '1',
   },
   logoLink: {
-    textDecoration: "none",
-    color: "white"
+    textDecoration: 'none',
+    color: 'white',
   },
-  link: {
-    textDecoration: "none",
-    color: "white",
-    fontSize: "1rem",
-    marginLeft: theme.spacing(10),
-    "&:hover": {
-      color: "yellow",
-      borderBottom: "1px solid white",
-    }
-  },
-
 }));
-
 
 function Navbar() {
   const classes = useStyles();
-
 
   return (
     <AppBar position="fixed">
       <CssBaseline />
       <Toolbar>
         <Typography href="#" variant="h4" className={classes.logo}>
-          <Link to="/" className={classes.logoLink}>Terranet</Link>
+          <Link to="/" className={classes.logoLink}>
+            Terranet
+          </Link>
         </Typography>
-        <nav >
-          <ul className={classes.navlinks}>
-            <li>
-              <UserMenu />
-            </li>
-            <li>
-              <Link to="/about" className={classes.link}>About</Link>
-            </li>
-            <li>
-              <Link to="/contact" className={classes.link}>Contact Us</Link>
-            </li>
-
-          </ul>
+        <nav>
+          <NavList />
         </nav>
       </Toolbar>
     </AppBar>

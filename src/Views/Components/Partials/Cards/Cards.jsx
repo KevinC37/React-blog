@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from '@material-ui/core';
 import { CardActionArea } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
@@ -52,6 +52,15 @@ const useStyles = makeStyles({
 function CardTemplate(props) {
   const styles = useStyles({});
   const [menuState, setMenuState] = useState(false);
+  const [companyName, setCompanyName] = useState('');
+  useEffect(() => {
+    if ( typeof props.user == undefined) {
+      return setCompanyName(props.user.company.name);
+    } else {
+      return setCompanyName('Terranet');
+    }
+    
+  }, [])
 
   function stringAvatar(name) {
     try {
@@ -73,9 +82,9 @@ function CardTemplate(props) {
     <CssBaseline>
       <Card id={`blogpost_id_${props.id}`} className={styles.card}>
         <CardHeader
-          avatar={<Avatar {...stringAvatar(props.user.name)} style={{ backgroundColor: `${stringToColor(String(props.user.name))}` }} />}
-          title={props.user.name}
-          subheader={props.user.company.name}
+          avatar={<Avatar {...stringAvatar(props.author || props.user.name )} style={{ backgroundColor: `${stringToColor(String(props.author || props.user.name))}` }} />}
+          title={props.author || props.user.name}
+          subheader={companyName}
           action={
             <IconButton id="toggle___menu___button" onClick={busMenuState}>
               <MoreVert />

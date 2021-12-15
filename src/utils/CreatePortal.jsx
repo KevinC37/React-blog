@@ -2,8 +2,15 @@ import React from "react";
 import ReactDOM from 'react-dom';
 
 export function removePortal() {
-  document.body.removeChild(document.getElementsByClassName('root-portal')[0]);
+  try{
+    document.body.removeChild(document.getElementsByClassName('root-portal')[0]);
+  } catch(e) {
+    console.log(e);
+  }
+ 
 }
+
+
 
 export const Portal = ({ children, className = 'root-portal', el = 'div' }) => {
   const [container] = React.useState(() => {

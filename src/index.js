@@ -7,11 +7,11 @@ import store from './storage/store.js';
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import Navigation from './Views/Components/Navigation/Navigation.jsx';
-import Blogposts from './Views/Components/Home/Blogposts.jsx';
+import Blogposts from './Views/Pages/HomePage.jsx';
 import AboutPage from './Views/Pages/About';
 import ContactPage from './Views/Pages/Contactus';
 import NotFound from './Views/Pages/404';
-import Blogpost from './Views/Pages/Blogposts';
+import Blogpost from './Views/Pages/Blogpost';
 import LogIn from './Views/Components/Auth/LogIn';
 import SignUp from './Views/Components/Auth/SignUp'
 import AddPost from './Views/Pages/AddPost.jsx';
@@ -19,7 +19,16 @@ import AddPost from './Views/Pages/AddPost.jsx';
 import reportWebVitals from './reportWebVitals';
 
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+
+    queries: {
+      refetchOnWindowFocus: false,
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+    },
+
+  },
+});
 
 
 ReactDOM.render(
