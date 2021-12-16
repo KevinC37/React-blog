@@ -1,0 +1,96 @@
+.hero___container {
+  width: 100%;
+}
+
+.hero___wrapper {
+  max-width: 80ch;
+  margin: 2rem auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero___background___image {
+  min-width: 5rem;
+  min-height: 5rem;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.hero___title {
+  text-align: left;
+  align-self: center;
+}
+
+.hero___divider {
+  border: 1px solid black;
+  margin-top: 2rem;
+}
+
+.core___container {
+  width: 100vw;
+  max-width: 100%;
+}
+
+.core___wrapper {
+  max-width: 80ch;
+  margin: 2rem auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.core___title {
+  text-align: left;
+  align-self: center;
+  margin-bottom: 2rem;
+}
+
+.core___subtitle {
+  margin-bottom: 1rem;
+}
+
+.connect___conainer {
+  min-width: 90vw;
+  max-width: 100%;
+
+  min-height: 5rem;
+  max-height: 10rem;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 10%);
+}
+
+.connect___wrapper {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.core___divider {
+  border: 1px solid black;
+}
+
+.contact___us {
+  transition: 0.5 ease-out opacity;
+  cursor: pointer;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.contact___us:hover {
+  opacity: 0.5;
+}
+
+.contact___us::after {
+  content: '';
+  height: 0.7em;
+  width: 0.7em;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0.7em;
+  background-position: center;
+  background-size: contain;
+  background-image: url('https://cdns.iconmonstr.com/wp-content/assets/preview/2018/240/iconmonstr-arrow-right-thin.png');
+}
