@@ -1,9 +1,6 @@
 import React from 'react';
 import '../Styles/body.css';
 
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-
 /* React forms imports */
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -11,14 +8,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 /* Material UI Imports */
 import { TextField, Button } from '@material-ui/core';
-import { Snackbar } from '@material-ui/core';
 
 const EMAIL_TO = `m.cujba@yahoo.com`;
 
 function ContactPage() {
-  const userName =
-    localStorage.getItem('firstName') + '' + localStorage.getItem('lastName');
-
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Please fill this field'),
     body: Yup.string().required('Please fill this field'),
@@ -28,8 +21,6 @@ function ContactPage() {
 
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
-  const redirect = useNavigate();
-  const [submitStatus, setSubmitStatus] = useState(false); //for triggering the 'Success' popup
 
   function onSubmit(data) {
     window.open(`mailto:${EMAIL_TO}?subject=${data.title}&body=${data.body}`);
@@ -69,17 +60,6 @@ function ContactPage() {
       <Button variant="contained" type="submit" color="primary">
         Send us your request
       </Button>
-      {submitStatus ? (
-        <div>
-          <Snackbar
-            open={submitStatus}
-            autoHideDuration={2000}
-            message="Welcome!"
-          />
-        </div>
-      ) : (
-        ''
-      )}
     </form>
   );
 }
