@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Styles/body.css';
 
 /* React forms imports */
 import { useForm } from 'react-hook-form';
@@ -8,6 +7,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 /* Material UI Imports */
 import { TextField, Button } from '@material-ui/core';
+
+/* Local imports */
+import '../styles/body.css';
+import '../styles/pages/ContactUs.css';
 
 const EMAIL_TO = `m.cujba@yahoo.com`;
 

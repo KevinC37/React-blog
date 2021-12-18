@@ -11,9 +11,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Close from '@material-ui/icons/Close';
 
 /* Local Imports */
-import '../../../Styles/Modals/EditModal.css';
+import '../../../styles/modals/EditModal.css';
 import { Portal, removePortal } from '../../../../utils/CreatePortal';
-import UpdatePostInLocalStorage from '../../../../utils/LocalStorage/UpdatePostInLocalStorage';
+import UpdatePostInLocalStorage from '../../../../utils/localStorage/UpdatePostInLocalStorage';
 
 export default function EditModal(props) {
   const title = _.capitalize(props.title);

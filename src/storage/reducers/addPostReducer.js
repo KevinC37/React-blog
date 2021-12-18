@@ -1,11 +1,13 @@
-const addPostReducer = (state = { author: '', title: '', body: '' }, action) => {
+const INITIAL_STATE = {
+  posts: []
+}
+
+const addPostReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "POSTS/ADD_POST":
       return {
         ...state,
-        author: action.payload.author,
-        title: action.payload.title,
-        body: action.payload.body
+        posts: [...state.posts, action.payload]
       }
     default:
       return state;

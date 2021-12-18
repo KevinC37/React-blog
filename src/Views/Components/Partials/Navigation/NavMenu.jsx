@@ -11,8 +11,8 @@ import Logout from '@mui/icons-material/Logout';
 import Home from '@material-ui/icons/Home';
 
 /* Local Imports*/
-import '../../../Styles/Navigation/Navigation.css';
-import logout from '../../../../utils/LocalStorage/Logout';
+import '../../../styles/navigation/Navigation.css';
+import { store } from '../../../../storage/store';
 
 export const NavMenu = forwardRef((props, ref) => {
   const [anchorEl, setAnchorEl] = useState(ref);
@@ -27,6 +27,7 @@ export const NavMenu = forwardRef((props, ref) => {
     };
   }, [ref]);
 
+  const logOut = () => store.dispatch({ type: 'USER/LOG_OUT' });
   return (
     <Menu
       open={open}
@@ -54,7 +55,7 @@ export const NavMenu = forwardRef((props, ref) => {
 
       <Divider />
 
-      <MenuItem onClick={logout}>
+      <MenuItem onClick={logOut}>
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>

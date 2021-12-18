@@ -1,44 +1,38 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import '../../Styles/Auth_Pages/SignUp.css';
 import { TextField, Button } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Snackbar } from '@material-ui/core';
+import { store } from '../../../storage/store';
 
-export default function SignIn() {
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name is required'),
-    lastName: Yup.string().required('Last name is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required'),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Passwords must match')
-      .required('Confirm your password'),
-  });
+/* Local imports */
+import signUpValidationSchema from '../../../utils/formValidations/signUp';
+import '../../styles/authPages/SignUp.css';
 
-  const formOptions = { resolver: yupResolver(validationSchema) };
-
+export default function SignUp() {
+  const formOptions = { resolver: yupResolver(signUpValidationSchema) };
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
   const redirect = useNavigate();
   const [submitStatus, setSubmitStatus] = useState(false); //for triggering the 'Success' popup
 
   function onSubmit(data) {
-    const localStorage = window.localStorage;
-    localStorage.setItem('firstName', data.firstName);
-    localStorage.setItem('lastName', data.lastName);
-    localStorage.setItem('email', data.email);
-    localStorage.setItem('password', data.password);
+    store.dispatch({
+      type: 'USER/SET_CREDENTIALS',
+      payload: {
+        auth: false,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+      },
+    });
 
     setSubmitStatus(true);
     setTimeout(() => {
       redirect('/login');
-      window.location.reload();
     }, 2000);
   }
 

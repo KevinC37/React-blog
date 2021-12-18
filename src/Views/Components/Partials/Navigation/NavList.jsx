@@ -1,5 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import _ from 'lodash';
 
@@ -9,7 +11,8 @@ import { Avatar } from '@mui/material';
 
 /* Local imports */
 import { NavMenu } from './NavMenu.jsx';
-import { useEffect } from 'react';
+import { selectAuthState } from '../../../../storage/selectors/authStateSelector.js';
+import { selectFirstName } from '../../../../storage/selectors/userNameSelector.js';
 
 const useStyles = makeStyles((theme) => ({
   user___profile: {
@@ -37,14 +40,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavList() {
+function NavList({ authStatus, user }) {
   const classes = useStyles();
-  const [isAuth, setIsAuth] = useState(null);
-  const [hasAcc, setHasAcc] = useState(null);
-  const [userName, setUserName] = useState(null);
-
+  const { firstName: userName } = user;
   const reference = useRef(null);
-
+  useEffect(() => {}, [authStatus]);
   const [anchorEl, setAnchorEl] = useState(null);
 
   function handleClick(e) {
@@ -57,51 +57,50 @@ export default function NavList() {
     return setAnchorEl(null);
   }
 
-  useEffect(() => {
-    setIsAuth(JSON.parse(localStorage.getItem('auth')));
-    setHasAcc(localStorage.getItem('email'));
-    setUserName(localStorage.getItem('firstName'));
-  }, [isAuth]);
-
   return (
-    <>
-      <ul className={classes.navlinks}>
-        <li>
-          {isAuth ? (
-            <div
-              ref={reference}
-              onClick={(e) => handleClick(e)}
-              className={classes.user___profile}
-            >
-              <Avatar className="avatar" />
-              <span>{userName ? _.capitalize(userName) : ''}</span>
-              {anchorEl ? (
-                <NavMenu handleClose={handleClose} ref={anchorEl} />
-              ) : (
-                <></>
-              )}
-            </div>
-          ) : hasAcc ? (
-            <Link to="/login" className={classes.link}>
-              Log in
-            </Link>
-          ) : (
-            <Link to="/signup" className={classes.link}>
-              Sign up
-            </Link>
-          )}
-        </li>
-        <li>
-          <Link to="/about" className={classes.link}>
-            About
+    <ul className={classes.navlinks}>
+      <li>
+        {authStatus === 'AUTHENTIFIED' ? (
+          <div
+            ref={reference}
+            onClick={(e) => handleClick(e)}
+            className={classes.user___profile}
+          >
+            <Avatar className="avatar" />
+            <span>{userName ? _.capitalize(userName) : ''}</span>
+            {anchorEl ? (
+              <NavMenu handleClose={handleClose} ref={anchorEl} />
+            ) : (
+              <></>
+            )}
+          </div>
+        ) : authStatus === 'LOG_IN' ? (
+          <Link to="/login" className={classes.link}>
+            Log in
           </Link>
-        </li>
-        <li>
-          <Link to="/contact" className={classes.link}>
-            Contact Us
+        ) : (
+          <Link to="/signup" className={classes.link}>
+            Sign up
           </Link>
-        </li>
-      </ul>
-    </>
+        )}
+      </li>
+      <li>
+        <Link to="/about" className={classes.link}>
+          About
+        </Link>
+      </li>
+      <li>
+        <Link to="/contact" className={classes.link}>
+          Contact Us
+        </Link>
+      </li>
+    </ul>
   );
 }
+
+const mapStateToProps = createStructuredSelector({
+  authStatus: selectAuthState,
+  user: selectFirstName,
+});
+
+export default connect(mapStateToProps)(NavList);

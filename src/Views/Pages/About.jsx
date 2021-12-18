@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../Styles/body.css';
-import '../Styles/Pages/about.css';
+import '../styles/body.css';
+import '../styles/pages/About.css';
 
 function AboutPage() {
   return (

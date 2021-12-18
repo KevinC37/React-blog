@@ -1,8 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import { useQueries } from 'react-query';
-import NotFound from './404';
-import '../Styles/body.css';
+
+/* Local imports */
+import NotFound from './404.jsx';
+import '../styles/body.css';
 
 function Blogpost() {
   const localStoragePosts = JSON.parse(

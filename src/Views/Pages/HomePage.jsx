@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { Box } from '@material-ui/core';
 
 /* Local imports */
-import CardTemplate from '../Components/Partials/Cards/Cards.jsx';
+import CardTemplate from '../components/partials/cards/Cards.jsx';
 import storageIsFull from '../../utils/LocalStorageSpace.jsx';
 
 const loadPosts = async () =>

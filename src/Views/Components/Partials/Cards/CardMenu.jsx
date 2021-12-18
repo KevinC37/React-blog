@@ -8,10 +8,10 @@ import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 
 /* Local Imports */
-import EditModal from '../Modals/EditModal.jsx';
-import '../../../Styles/Components/Cards/CardMenu.css';
+import EditModal from '../modals/EditModal.jsx';
+import '../../../styles/components/cards/CardMenu.css';
 import SuccessSnackBar from '../../../../utils/CreateSuccessSnackBar';
-import { SNACKBAR_SUCCCESS_MESSAGE_TYPE } from '../../../../GlobalVars';
+import { SNACKBAR_SUCCCESS_MESSAGE_TYPE } from '../../../../globalVars';
 
 const localStore = JSON.parse(window.localStorage.getItem('POSTS_ADDED'));
 
@@ -32,28 +32,31 @@ export default function CardMenu(props) {
     busMenuState();
   };
 
-  const API_DELETE_POST = async () =>
-    await fetch(`https://jsonplaceholder.typicode.com/posts/${props.id}`, {
-      method: 'DELETE',
-    }).then((response) => {
-      if (response.ok) {
-        currentBlogpost.remove();
-        setPostDeleteStatus(true);
-
-        const updateLocalStorage = _.filter(
-          localStore,
-          (e) => e.id !== props.id
-        );
-        window.localStorage.setItem(
-          'POSTS_ADDED',
-          JSON.stringify(updateLocalStorage)
-        );
+  const API_DELETE_POST = async () => {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${props.id}`,
+      {
+        method: 'DELETE',
       }
+    );
 
-      setTimeout(() => {
-        setPostDeleteStatus(false);
-      }, 6000);
-    });
+    // const data = await response.json();
+
+    if (response.ok) {
+      currentBlogpost.remove();
+      setPostDeleteStatus(true);
+
+      const updateLocalStorage = _.filter(localStore, (e) => e.id !== props.id);
+      window.localStorage.setItem(
+        'POSTS_ADDED',
+        JSON.stringify(updateLocalStorage)
+      );
+    }
+
+    setTimeout(() => {
+      setPostDeleteStatus(false);
+    }, 6000);
+  };
 
   return (
     <div hidden={!menuState}>

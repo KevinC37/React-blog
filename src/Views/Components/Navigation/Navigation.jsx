@@ -11,8 +11,8 @@ import {
 } from '@material-ui/core';
 
 /* Local imports */
-import '../../Styles/Navigation/Navigation.css';
-import NavList from '../Partials/Navigation/NavList.jsx';
+import '../../styles/navigation/Navigation.css';
+import NavList from '../partials/navigation/NavList.jsx';
 
 const useStyles = makeStyles((theme) => ({
   logo: {
