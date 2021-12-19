@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Snackbar, LinearProgress, Alert } from '@mui/material';
 import { Portal } from './CreatePortal';
-import { removePortal } from './CreatePortal';
 
 export default function SuccessSnackBar(props) {
   const [progress, setProgress] = useState(10);
@@ -13,18 +12,11 @@ export default function SuccessSnackBar(props) {
       );
     }, 800);
 
-    const closePortal = setTimeout(() => {
-      removePortal();
-    }, 5600);
-
-    return () => {
-      clearInterval(timer);
-      clearTimeout(closePortal);
-    };
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <Portal>
+    <Portal key={props.id}>
       <Snackbar
         sx={{ marginTop: '60px' }}
         open={true}

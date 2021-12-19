@@ -21,13 +21,31 @@ export const signUp = credentials => ({
 export const addPost = post => ({
   type: 'POSTS/ADD_POST',
   payload: {
-    userId: post.userId,
-    author: post.author,
     id: post.id,
     title: post.title,
-    body: post.body
+    body: post.body,
+    userId: post.userId,
+    user: {
+      name: post.author,
+    }
   }
 
+})
+
+export const removePost = id => ({
+  type: 'POSTS/REMOVE_POST',
+  payload: {
+    id
+  }
+})
+
+export const editPost = post => ({
+  type: 'POSTS/EDIT_POST',
+  payload: {
+    id: post.id,
+    title: post.title,
+    body: post.body,
+  }
 })
 
 export const logOut = { type: 'USER/LOG_OUT' }

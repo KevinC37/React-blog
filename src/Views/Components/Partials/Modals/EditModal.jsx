@@ -10,12 +10,17 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Close from '@material-ui/icons/Close';
 
+/* Redux imports */
+import { useStore } from 'react-redux';
+import { editPost } from '../../../../storage/actions';
+
 /* Local Imports */
 import '../../../styles/modals/EditModal.css';
-import { Portal, removePortal } from '../../../../utils/CreatePortal';
-import UpdatePostInLocalStorage from '../../../../utils/localStorage/UpdatePostInLocalStorage';
+import { Portal } from '../../../../utils/CreatePortal';
+// import UpdatePostInLocalStorage from '../../../../utils/localStorage/UpdatePostInLocalStorage';
 
 export default function EditModal(props) {
+  const reduxStore = useStore();
   const title = _.capitalize(props.title);
   const body = _.capitalize(props.body);
   const [postStatus, setPostStatus] = useState({
@@ -46,11 +51,12 @@ export default function EditModal(props) {
       body: JSON.stringify(data),
     });
 
-  const handleForm = async (e) => {
+  const handleForm = async (postToEdit) => {
+    postToEdit.id = props.id;
     try {
-      await updatePost(e);
+      await updatePost(postToEdit);
       setPostStatus({ status: 'Success', btnColor: 'default' });
-      UpdatePostInLocalStorage(props, e);
+      reduxStore.dispatch(editPost(postToEdit));
     } catch (e) {
       setPostStatus({ status: `'Error': ${e}`, btnColor: 'secondary' });
     }
@@ -59,7 +65,6 @@ export default function EditModal(props) {
   /* Closing the modal */
   function handleClose(e) {
     busEditModalState(e);
-    removePortal();
   }
 
   return (
@@ -115,7 +120,6 @@ export default function EditModal(props) {
                 color={postStatus.btnColor}
                 variant="contained"
               >
-                {' '}
                 {postStatus.status}
               </Button>
             </form>

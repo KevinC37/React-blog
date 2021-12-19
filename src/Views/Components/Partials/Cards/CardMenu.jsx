@@ -1,99 +1,106 @@
-import * as React from 'react';
-import { useState } from 'react';
-import _ from 'lodash';
+import React, { useState, useCallback, useEffect } from 'react';
 
 /* Material UI Imports */
 import { MenuItem } from '@material-ui/core';
 import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 
+/* Redux imports */
+import { useStore } from 'react-redux';
+
+/* Global variable imports */
+import { SNACKBAR_SUCCESS_TIMEOUT } from '../../../../globalVars';
+import { SNACKBAR_SUCCCESS_MESSAGE_TYPE } from '../../../../globalVars';
+
 /* Local Imports */
 import EditModal from '../modals/EditModal.jsx';
 import '../../../styles/components/cards/CardMenu.css';
 import SuccessSnackBar from '../../../../utils/CreateSuccessSnackBar';
-import { SNACKBAR_SUCCCESS_MESSAGE_TYPE } from '../../../../globalVars';
-
-const localStore = JSON.parse(window.localStorage.getItem('POSTS_ADDED'));
+import API_DELETE_POST from '../../../../utils/api/removePost.js';
 
 export default function CardMenu(props) {
-  const currentBlogpost = document.getElementById(`blogpost_id_${props.id}`);
   const busMenuState = props.busMenuState;
   const menuState = props.menuState;
   const [editModalState, setEditModalState] = useState(false);
-  const [postDeleteStatus, setPostDeleteStatus] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const reduxStore = useStore();
 
-  const busEditModalState = (e) => {
-    e.stopPropagation();
-    setEditModalState(!editModalState);
-  };
+  const busEditModalState = useCallback(
+    (e) => {
+      e.stopPropagation();
+      setEditModalState(!editModalState);
+    },
+    [editModalState]
+  );
 
-  const hideMenu = (e) => {
-    e.stopPropagation();
-    busMenuState();
-  };
+  const hideMenu = useCallback(
+    (e) => {
+      e.stopPropagation();
+      busMenuState();
+    },
+    [busMenuState]
+  );
 
-  const API_DELETE_POST = async () => {
-    const response = await fetch(
-      `https://jsonplaceholder.typicode.com/posts/${props.id}`,
-      {
-        method: 'DELETE',
-      }
-    );
-
-    // const data = await response.json();
-
-    if (response.ok) {
-      currentBlogpost.remove();
-      setPostDeleteStatus(true);
-
-      const updateLocalStorage = _.filter(localStore, (e) => e.id !== props.id);
-      window.localStorage.setItem(
-        'POSTS_ADDED',
-        JSON.stringify(updateLocalStorage)
+  useEffect(() => {
+    //initializing the timer to close snackbar
+    let timer;
+    if (showSnackbar) {
+      timer = setTimeout(
+        () => setShowSnackbar(false),
+        SNACKBAR_SUCCESS_TIMEOUT
       );
+      console.log(showSnackbar);
     }
 
-    setTimeout(() => {
-      setPostDeleteStatus(false);
-    }, 6000);
-  };
+    //on unmount - clear the snackbar timer
+    return () => clearTimeout(timer);
+  }, [showSnackbar]);
+
+  const deletePost = useCallback(() => {
+    API_DELETE_POST(props, reduxStore);
+    setShowSnackbar(true);
+  }, [props, reduxStore]);
 
   return (
-    <div hidden={!menuState}>
-      <div>
-        <div className="card___menu">
-          <MenuItem
-            onClick={(e) => hideMenu(e)}
-            onMouseDown={(e) => busEditModalState(e)}
-            disableRipple
-          >
-            <Edit />
-            <span>Edit</span>
-          </MenuItem>
+    <>
+      <div hidden={!menuState}>
+        <div>
+          <div className="card___menu">
+            <MenuItem
+              onClick={(e) => hideMenu(e)}
+              onMouseDown={(e) => busEditModalState(e)}
+              disableRipple
+            >
+              <Edit />
+              <span>Edit</span>
+            </MenuItem>
 
-          <MenuItem onClick={API_DELETE_POST} disableRipple>
-            <Delete />
-            <span>Delete</span>
-          </MenuItem>
+            <MenuItem onClick={deletePost} disableRipple>
+              <Delete />
+              <span>Delete</span>
+            </MenuItem>
+          </div>
         </div>
+
+        {editModalState ? (
+          <EditModal
+            {...props}
+            editModalState={editModalState}
+            busEditModalState={(e) => busEditModalState(e)}
+          />
+        ) : (
+          <></>
+        )}
       </div>
-      {postDeleteStatus ? (
+
+      {showSnackbar ? (
         <SuccessSnackBar
           id={props.id}
           actionType={SNACKBAR_SUCCCESS_MESSAGE_TYPE.DELETE}
         />
       ) : (
-        ''
-      )}
-      {editModalState ? (
-        <EditModal
-          {...props}
-          editModalState={editModalState}
-          busEditModalState={(e) => busEditModalState(e)}
-        />
-      ) : (
         <></>
       )}
-    </div>
+    </>
   );
 }

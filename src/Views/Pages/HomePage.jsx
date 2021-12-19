@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useQueries } from 'react-query';
-import _ from 'lodash';
 
 /* Material UI Imports */
 import { Box } from '@material-ui/core';
 
+/* Redux Imports */
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { postsSelect } from '../../storage/selectors/postsSelector.js';
+
 /* Local imports */
 import CardTemplate from '../components/partials/cards/Cards.jsx';
-import storageIsFull from '../../utils/LocalStorageSpace.jsx';
+// import storageIsFull from '../../utils/LocalStorageSpace.jsx';
 
 const loadPosts = async () =>
   await (await fetch(`https://jsonplaceholder.typicode.com/posts/`)).json();
@@ -26,31 +30,44 @@ function linkUserToPost(posts, users) {
   }
 }
 
-function loadLocalStoragePosts(posts, users) {
-  const storageMemory = storageIsFull();
+// function loadLocalStoragePosts(posts, users) {
+//   const storageMemory = storageIsFull();
 
-  if (!storageMemory) {
-    const localPosts = JSON.parse(window.localStorage.getItem('POSTS_ADDED'));
-    if (posts.isSuccess && users.isSuccess) {
-      localPosts.forEach((localPost) =>
-        posts.data.filter((post) => post.id === localPost.id).length > 1
-          ? ''
-          : posts.data.unshift(localPost)
-      );
-    }
-  } else {
-    return alert('Out of local storage memory');
-  }
-}
+//   if (!storageMemory) {
+//     const localPosts = JSON.parse(window.localStorage.getItem('POSTS_ADDED'));
+//     if (posts.isSuccess && users.isSuccess) {
+//       localPosts.forEach((localPost) =>
+//         posts.data.filter((post) => post.id === localPost.id).length > 1
+//           ? ''
+//           : posts.data.unshift(localPost)
+//       );
+//     }
+//   } else {
+//     return alert('Out of local storage memory');
+//   }
+// }
 
-export default function Blogposts() {
+function Blogposts({ localPosts }) {
   const [posts, users] = useQueries([
     { queryKey: 'posts', queryFn: loadPosts },
     { queryKey: 'users', queryFn: loadUsers },
   ]);
 
-  linkUserToPost(posts, users);
-  loadLocalStoragePosts(posts, users);
+  const allPosts = [];
+
+  //Wait for the posts coming from API to load and concats the incoming data with local storage posts
+  const loadAllPosts = useCallback(() => {
+    if (posts.isSuccess) {
+      //API POSTS
+      linkUserToPost(posts, users);
+      posts.data.map((e) => allPosts.push(e));
+
+      //Local posts
+      localPosts.forEach((e) => allPosts.unshift(e));
+    }
+  }, [allPosts, localPosts, posts, users]);
+
+  loadAllPosts();
 
   return (
     <Box
@@ -64,13 +81,17 @@ export default function Blogposts() {
         flexWrap: 'wrap',
       }}
     >
-      {posts.isSuccess && users.isSuccess ? (
-        _.uniqBy(posts.data, 'id').map((e) => {
-          return <CardTemplate {...e} key={e.id}></CardTemplate>;
-        })
+      {!!posts.data && !!users.data && !!allPosts.length ? (
+        allPosts.map((e) => <CardTemplate {...e} key={e.id}></CardTemplate>)
       ) : (
         <div>Loading...</div>
       )}
     </Box>
   );
 }
+
+const mapStateToProps = createStructuredSelector({
+  localPosts: postsSelect,
+});
+
+export default connect(mapStateToProps)(Blogposts);

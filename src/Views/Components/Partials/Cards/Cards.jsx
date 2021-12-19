@@ -11,24 +11,7 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import CardMenu from './CardMenu';
-
-function stringToColor(string) {
-  let hash = 0;
-  let i;
-
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = '#';
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.substr(-2);
-  }
-
-  return color;
-}
+import stringToColor from '../../../../utils/stringToColor.js';
 
 const useStyles = makeStyles({
   card: {
@@ -52,12 +35,14 @@ function CardTemplate(props) {
   const [menuState, setMenuState] = useState(false);
   const [companyName, setCompanyName] = useState('');
   useEffect(() => {
-    if (typeof props.user !== 'undefined') {
+    if (typeof props.user.company !== 'undefined') {
       return setCompanyName(props.user.company.name);
     } else {
       return setCompanyName('Terranet');
     }
   }, [props.user]);
+
+  // console.log(props);
 
   function stringAvatar(name) {
     try {
@@ -80,15 +65,13 @@ function CardTemplate(props) {
         <CardHeader
           avatar={
             <Avatar
-              {...stringAvatar(props.author || props.user.name)}
+              {...stringAvatar(props.user.name)}
               style={{
-                backgroundColor: `${stringToColor(
-                  String(props.author || props.user.name)
-                )}`,
+                backgroundColor: `${stringToColor(String(props.user.name))}`,
               }}
             />
           }
-          title={props.author || props.user.name}
+          title={props.user.name}
           subheader={companyName}
           action={
             <IconButton id="toggle___menu___button" onClick={busMenuState}>

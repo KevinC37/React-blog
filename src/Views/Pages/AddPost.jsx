@@ -32,7 +32,7 @@ import { SNACKBAR_SUCCCESS_MESSAGE_TYPE } from '../../globalVars/index.js';
 import '../styles/components/AddPost.css';
 
 function AddPost({ author }) {
-  const [postAddedStatus, setPostAddedStatus] = useState(false); //for triggering the 'Post state' popup
+  const [showSnackbar, setShowSnackbar] = useState(false); //for triggering the 'Post state' popup
   const [postId, setPostId] = useState(null);
   const [userId, setUserId] = useState(null);
   const [postStatus, setPostStatus] = useState({
@@ -46,15 +46,24 @@ function AddPost({ author }) {
   const { errors } = formState;
 
   useEffect(() => {
+    //generate unique IDs for the upcoming new post
     setPostIds(setPostId, setUserId);
-  }, []);
+
+    //initializing the close snackbar timer
+    let timer;
+    if (showSnackbar) timer = setTimeout(() => setShowSnackbar(false), 5600);
+
+    //on unmount - clear the timer
+    return () => clearTimeout(timer);
+  }, [showSnackbar]);
 
   async function submitData(post) {
     await addPostViaAPI(post);
-    setPostAddedStatus(true);
   }
 
   async function onSubmit(data) {
+    setShowSnackbar(true);
+
     const post = {
       userId: userId,
       author: author.fullName,
@@ -122,7 +131,7 @@ function AddPost({ author }) {
       >
         {postStatus.status}
       </Button>
-      {postAddedStatus ? (
+      {showSnackbar ? (
         <div>
           <SuccessSnackBar
             id={postId}
