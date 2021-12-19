@@ -1,58 +1,60 @@
 import React from 'react';
-import _ from 'lodash';
 import { useQueries } from 'react-query';
+
+/* Redux imports */
+import { postsSelect } from '../../storage/selectors/postsSelector.js';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+
+/* Utils import */
+import capitalize from '../../utils/textFormatters/capitalize.js';
+import getObjectSize from '../../utils/objectUtils/getObjectSize.js';
 
 /* Local imports */
 import NotFound from './404.jsx';
 import '../styles/body.css';
 
-function Blogpost() {
-  const localStoragePosts = JSON.parse(
-    window.localStorage.getItem('POSTS_ADDED')
-  );
-  const currentPost = _.filter(localStoragePosts, [
-    'id',
-    Number(window.location.pathname.match(/\d+/)[0]),
-  ]);
-  const dedupedPost = _.head(_.uniqBy(currentPost, 'id'));
+function Blogpost({ localPosts }) {
+  const queryPostId = window.location.pathname.match(/\d+/)[0];
+
+  const currentLocalPost = localPosts
+    .filter((post) => Number(post.id) === Number(queryPostId))
+    .shift();
 
   const fetchPost = async () =>
     await (
-      await fetch(
-        `https://jsonplaceholder.typicode.com/posts${window.location.pathname.replace(
-          '/posts',
-          ''
-        )}`
-      )
+      await fetch(`https://jsonplaceholder.typicode.com/posts/${queryPostId}`)
     ).json();
+
   const fetchAuthor = async () =>
     await (await fetch(`https://jsonplaceholder.typicode.com/users/`)).json();
+
   const [post, authors] = useQueries([
     {
       queryKey: 'post',
       queryFn: fetchPost,
-      enabled: typeof dedupedPost == 'undefined',
+      enabled: String(typeof currentLocalPost) === 'undefined',
     },
     {
       queryKey: 'author',
       queryFn: fetchAuthor,
-      enabled: typeof dedupedPost == 'undefined',
+      enabled: String(typeof currentLocalPost) === 'undefined',
     },
   ]);
 
-  const formatText = (text) => _.capitalize(text);
+  const formatText = (text) => capitalize(text);
 
   return (
     <div>
-      {dedupedPost ? (
+      {currentLocalPost ? (
         <div>
-          <h1>{formatText(dedupedPost.title)}</h1>
-          <p>Author: {dedupedPost.author}</p>
-          <p>{formatText(dedupedPost.body)}</p>
+          <h1>{formatText(currentLocalPost.title)}</h1>
+          <p>Author: {currentLocalPost.user.name}</p>
+          <p>{formatText(currentLocalPost.body)}</p>
         </div>
       ) : post.isFetching ? (
         <div>Loading...</div>
-      ) : _.size(post.data) === 0 ? (
+      ) : getObjectSize(post.data) === 0 ? (
         <NotFound />
       ) : post.data && authors.data ? (
         <div>
@@ -72,4 +74,8 @@ function Blogpost() {
   );
 }
 
-export default Blogpost;
+const mapStateToProps = createStructuredSelector({
+  localPosts: postsSelect,
+});
+
+export default connect(mapStateToProps)(Blogpost);

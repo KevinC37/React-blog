@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import _ from 'lodash';
+/* Utils imports */
+import capitalize from '../../../../utils/textFormatters/capitalize.js';
 
 /* Material UI Imports*/
 import { makeStyles } from '@material-ui/core';
@@ -67,7 +68,7 @@ function NavList({ authStatus, user }) {
             className={classes.user___profile}
           >
             <Avatar className="avatar" />
-            <span>{userName ? _.capitalize(userName) : ''}</span>
+            <span>{userName ? capitalize(userName) : ''}</span>
             {anchorEl ? (
               <NavMenu handleClose={handleClose} ref={anchorEl} />
             ) : (

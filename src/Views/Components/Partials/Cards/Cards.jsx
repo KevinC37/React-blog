@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+/* Material UI Imports */
 import { Card } from '@material-ui/core';
 import { CardActionArea } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
@@ -8,8 +11,11 @@ import { CardHeader } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import MoreVert from '@material-ui/icons/MoreVert';
-import { Link } from 'react-router-dom';
-import _ from 'lodash';
+
+/* Util imports */
+import capitalize from '../../../../utils/textFormatters/capitalize';
+
+/* Local imports */
 import CardMenu from './CardMenu';
 import stringToColor from '../../../../utils/stringToColor.js';
 
@@ -96,7 +102,7 @@ function CardTemplate(props) {
                 component="div"
                 color="textPrimary"
               >
-                {_.capitalize(props.title)}
+                {capitalize(props.title)}
               </Typography>
             </CardContent>
           </CardActionArea>

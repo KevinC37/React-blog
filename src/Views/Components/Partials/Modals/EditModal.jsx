@@ -4,11 +4,15 @@ import { useState } from 'react';
 /* Material UI Imports */
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import _ from 'lodash';
+import Close from '@material-ui/icons/Close';
+
+/* React hook form imports */
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Close from '@material-ui/icons/Close';
+
+/* Utils imports */
+import capitalize from '../../../../utils/textFormatters/capitalize';
 
 /* Redux imports */
 import { useStore } from 'react-redux';
@@ -17,12 +21,11 @@ import { editPost } from '../../../../storage/actions';
 /* Local Imports */
 import '../../../styles/modals/EditModal.css';
 import { Portal } from '../../../../utils/CreatePortal';
-// import UpdatePostInLocalStorage from '../../../../utils/localStorage/UpdatePostInLocalStorage';
 
 export default function EditModal(props) {
   const reduxStore = useStore();
-  const title = _.capitalize(props.title);
-  const body = _.capitalize(props.body);
+  const title = capitalize(props.title);
+  const body = capitalize(props.body);
   const [postStatus, setPostStatus] = useState({
     status: 'Update post',
     btnColor: 'primary',

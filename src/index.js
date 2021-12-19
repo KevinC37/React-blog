@@ -14,8 +14,6 @@ import Navigation from './views/components/navigation/Navigation.jsx';
 import NotFound from './views/pages/404';
 
 import reportWebVitals from './reportWebVitals';
-import { ADD_POSTS_TO_LOCAL_STORAGE } from './utils/localStorage/InitializeEmptyStorage.js';
-
 
 
 const SignUp = lazy(() => import('./views/components/auth/SignUp'));
@@ -29,7 +27,6 @@ const ContactPage = lazy(() => import('./views/pages/Contactus'));
 const AboutPage = lazy(() => import('./views/pages/About'));
 
 
-ADD_POSTS_TO_LOCAL_STORAGE();
 
 const queryClient = new QueryClient({
   defaultOptions: {
