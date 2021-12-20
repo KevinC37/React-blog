@@ -60,7 +60,7 @@ function ContactPage() {
       />
       {errors.body && <p>{errors.body?.message}</p>}
 
-      <Button variant="contained" type="submit" color="primary">
+      <Button variant="contained" type="submit" color="primary" size="large">
         Send us your request
       </Button>
     </form>
