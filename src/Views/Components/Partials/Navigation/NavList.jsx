@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -45,18 +45,17 @@ function NavList({ authStatus, user }) {
   const classes = useStyles();
   const { firstName: userName } = user;
   const reference = useRef(null);
-  useEffect(() => {}, [authStatus]);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  function handleClick(e) {
+  useEffect(() => {}, [authStatus]);
+
+  const handleClick = useCallback((e) => {
     if (reference.current.contains(e.target)) {
       setAnchorEl(reference.current);
     }
-  }
+  }, []);
 
-  function handleClose() {
-    return setAnchorEl(null);
-  }
+  const handleClose = useCallback((e) => setAnchorEl(null), []);
 
   return (
     <ul className={classes.navlinks}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useQueries } from 'react-query';
 
 /* Redux imports */
@@ -42,7 +42,7 @@ function Blogpost({ localPosts }) {
     },
   ]);
 
-  const formatText = (text) => capitalize(text);
+  const formatText = useCallback((text) => capitalize(text), []);
 
   return (
     <div>

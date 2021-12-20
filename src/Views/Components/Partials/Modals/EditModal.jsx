@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 /* Material UI Imports */
 import { TextField } from '@material-ui/core';
@@ -66,9 +65,10 @@ export default function EditModal(props) {
   };
 
   /* Closing the modal */
-  function handleClose(e) {
-    busEditModalState(e);
-  }
+  const handleClose = useCallback(
+    (e) => busEditModalState(e),
+    [busEditModalState]
+  );
 
   return (
     <Portal>

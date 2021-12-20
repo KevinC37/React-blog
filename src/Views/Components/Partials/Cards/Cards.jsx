@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 /* Material UI Imports */
@@ -61,9 +61,9 @@ function CardTemplate(props) {
     }
   }
 
-  const busMenuState = () => {
+  const busMenuState = useCallback(() => {
     setMenuState(!menuState);
-  };
+  }, [menuState]);
 
   return (
     <CssBaseline>

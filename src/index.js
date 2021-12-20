@@ -34,6 +34,7 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+      suspense: true,
     },
 
   },
