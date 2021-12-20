@@ -9,9 +9,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 /* Material UI Imports */
-import { TextField, Button } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
-/* Local imports */
+/* ----------------- Local imports ------------------- */
 
 //IMPORT API REQUEST HANDLER
 import { addPostViaAPI, setPostIds } from '../../utils/api/addPost.js';
@@ -91,57 +92,58 @@ function AddPost({ author }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form___main">
+    <>
       <h2 className="form___header">Create post</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="form___main">
+        <TextField
+          type="text"
+          error={!!errors.title}
+          margin="normal"
+          variant="outlined"
+          className="input___field"
+          label="Blogpost Title"
+          multiline
+          minRows={1}
+          maxRows={2}
+          {...register('title')}
+        />
+        {errors.title && <p>Title cannot be empty!</p>}
 
-      <TextField
-        type="text"
-        error={!!errors.title}
-        margin="normal"
-        variant="outlined"
-        className="input___field"
-        label="Blogpost Title"
-        multiline
-        minRows={1}
-        maxRows={2}
-        {...register('title')}
-      />
-      {errors.title && <p>Title cannot be empty!</p>}
+        <TextField
+          type="text"
+          error={!!errors.body}
+          margin="normal"
+          variant="outlined"
+          className="input___field"
+          label="What's that you would like to share with us today?"
+          multiline
+          minRows={10}
+          maxRows={10}
+          {...register('body')}
+        />
+        {errors.body && <p>{errors.body?.message}</p>}
 
-      <TextField
-        type="text"
-        error={!!errors.body}
-        margin="normal"
-        variant="outlined"
-        className="input___field"
-        label="What's that you would like to share with us today?"
-        multiline
-        minRows={10}
-        maxRows={10}
-        {...register('body')}
-      />
-      {errors.body && <p>{errors.body?.message}</p>}
-
-      <Button
-        className="submit___button"
-        type="submit"
-        color={postStatus.btnColor}
-        disabled={postStatus.disabled}
-        variant="contained"
-      >
-        {postStatus.status}
-      </Button>
-      {showSnackbar ? (
-        <div>
-          <SuccessSnackBar
-            id={postId}
-            actionType={SNACKBAR_SUCCCESS_MESSAGE_TYPE.ADD}
-          />
-        </div>
-      ) : (
-        ''
-      )}
-    </form>
+        <Button
+          className="submit___button"
+          type="submit"
+          color="primary"
+          disabled={postStatus.disabled}
+          variant="contained"
+        >
+          {postStatus.status}
+        </Button>
+        {showSnackbar ? (
+          <div>
+            <SuccessSnackBar
+              id={postId}
+              actionType={SNACKBAR_SUCCCESS_MESSAGE_TYPE.ADD}
+            />
+          </div>
+        ) : (
+          ''
+        )}
+      </form>
+    </>
   );
 }
 

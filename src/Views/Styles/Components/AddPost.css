@@ -2,3 +2,15 @@
 .submit___button {
   margin: 10px 0 0 0 !important;
 }
+
+.form___header {
+  text-align: center;
+}
+
+.form___main {
+  display: flex;
+  flex-direction: column;
+  min-width: 310px;
+  max-width: 45em;
+  margin: auto;
+}
