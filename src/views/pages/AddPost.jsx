@@ -56,7 +56,7 @@ function AddPost({ author }) {
 
     //on unmount - clear the timer
     return () => clearTimeout(timer);
-  }, [showSnackbar]);
+  }, [showSnackbar, postStatus]);
 
   async function submitData(post) {
     await addPostViaAPI(post);
@@ -124,9 +124,12 @@ function AddPost({ author }) {
         {errors.body && <p>{errors.body?.message}</p>}
 
         <Button
-          className="submit___button"
+          tabIndex="-1"
+          style={{ marginTop: 0.5 + 'em' }}
+          className=".submit___button___add___post"
           type="submit"
-          color="primary"
+          color={postStatus.btnColor}
+          size="large"
           disabled={postStatus.disabled}
           variant="contained"
         >
@@ -140,7 +143,7 @@ function AddPost({ author }) {
             />
           </div>
         ) : (
-          ''
+          <></>
         )}
       </form>
     </>

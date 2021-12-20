@@ -32,7 +32,7 @@ function ContactPage() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form___main">
       <h2 className="form___header">Contact us</h2>
-      <h3 className="form___header">We are all ears</h3>
+      <h3 className="form___header">We are all ears &#128066;</h3>
 
       <TextField
         type="title"

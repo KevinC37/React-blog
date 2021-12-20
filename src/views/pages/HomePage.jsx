@@ -76,8 +76,9 @@ function MemoizedBlogposts({ localPosts }) {
   );
 }
 
+const Blogposts = memo(MemoizedBlogposts);
 const mapStateToProps = createStructuredSelector({
   localPosts: postsSelect,
 });
-const Blogposts = memo(MemoizedBlogposts);
+
 export default connect(mapStateToProps)(Blogposts);

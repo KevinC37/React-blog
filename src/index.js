@@ -15,13 +15,15 @@ import NotFound from './views/pages/404';
 
 import reportWebVitals from './reportWebVitals';
 
+import AddPost from './views/pages/AddPost.jsx';
 
-const SignUp = lazy(() => import('./views/components/auth/SignUp'));
-const LogIn = lazy(() => import('./views/components/auth/LogIn'));
+const SignUp = lazy(() => import('./views/pages/SignUp'));
+const LogIn = lazy(() => import('./views/pages/LogIn'));
 
 const Blogposts = lazy(() => import('./views/pages/HomePage.jsx'))
 const Blogpost = lazy(() => import('./views/pages/Blogpost'));
-const AddPost = lazy(() => import('./views/pages/AddPost.jsx'))
+
+// const AddPost = import('./views/pages/AddPost.jsx')
 
 const ContactPage = lazy(() => import('./views/pages/Contactus'));
 const AboutPage = lazy(() => import('./views/pages/About'));

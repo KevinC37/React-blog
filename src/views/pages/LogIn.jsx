@@ -10,9 +10,9 @@ import { TextField, Button } from '@material-ui/core';
 import { Snackbar } from '@material-ui/core';
 
 /* Local imports */
-import '../../styles/authPages/LogIn.css';
-import logInValidationSchema from '../../../utils/formValidations/logIn';
-import { store } from '../../../storage/store';
+import '../styles/authPages/LogIn.css';
+import logInValidationSchema from '../../utils/formValidations/logIn';
+import { store } from '../../storage/store';
 import { useEffect } from 'react';
 
 function LogIn() {

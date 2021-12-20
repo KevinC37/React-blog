@@ -5,11 +5,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Snackbar } from '@material-ui/core';
-import { store } from '../../../storage/store';
 
 /* Local imports */
-import signUpValidationSchema from '../../../utils/formValidations/signUp';
-import '../../styles/authPages/SignUp.css';
+import { store } from '../../storage/store';
+import signUpValidationSchema from '../../utils/formValidations/signUp';
+import '../styles/authPages/SignUp.css';
 
 export default function SignUp() {
   const formOptions = { resolver: yupResolver(signUpValidationSchema) };
