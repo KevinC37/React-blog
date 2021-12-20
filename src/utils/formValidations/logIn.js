@@ -5,6 +5,8 @@ import { store } from '../../storage/store';
 const reduxStore = store.getState().user;
 const { email: passedEmail, password: passedPassword } = reduxStore;
 
+console.log(passedEmail);
+console.log(passedPassword);
 
 const logInValidationSchema =
   Yup.object().shape({

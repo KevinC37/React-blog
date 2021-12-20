@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,8 +15,15 @@ export default function SignUp() {
   const formOptions = { resolver: yupResolver(signUpValidationSchema) };
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
-  const redirect = useNavigate();
+
   const [submitStatus, setSubmitStatus] = useState(false); //for triggering the 'Success' popup
+
+  const redirect = useNavigate();
+  let redirectTimer;
+
+  useEffect(() => {
+    return () => clearTimeout(redirectTimer);
+  }, [redirectTimer]);
 
   function onSubmit(data) {
     store.dispatch({
@@ -31,9 +38,7 @@ export default function SignUp() {
     });
 
     setSubmitStatus(true);
-    setTimeout(() => {
-      redirect('/login');
-    }, 2000);
+    redirectTimer = setTimeout(() => redirect('/login'), 2000);
   }
 
   return (

@@ -13,6 +13,7 @@ import { Snackbar } from '@material-ui/core';
 import '../../styles/authPages/LogIn.css';
 import logInValidationSchema from '../../../utils/formValidations/logIn';
 import { store } from '../../../storage/store';
+import { useEffect } from 'react';
 
 function LogIn() {
   const formOptions = { resolver: yupResolver(logInValidationSchema) };
@@ -21,12 +22,16 @@ function LogIn() {
   const redirect = useNavigate();
   const [submitStatus, setSubmitStatus] = useState(false); //for triggering the 'Success' popup
 
+  let redirectTimer;
+
+  useEffect(() => {
+    return () => clearTimeout(redirectTimer);
+  }, [redirectTimer]);
+
   function onSubmit() {
     store.dispatch({ type: 'USER/LOGIN' });
     setSubmitStatus(true);
-    setTimeout(() => {
-      redirect('/');
-    }, 2000);
+    redirectTimer = setTimeout(() => redirect('/'), 2000);
   }
 
   return (
