@@ -14,7 +14,7 @@ import {
 import '../../styles/navigation/Navigation.css';
 import NavList from '../partials/navigation/NavList.jsx';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   logo: {
     flexGrow: '1',
   },
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar() {
+export default function Navbar() {
   const classes = useStyles();
 
   return (
@@ -43,4 +43,3 @@ function Navbar() {
     </AppBar>
   );
 }
-export default Navbar;

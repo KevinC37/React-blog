@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/body.css';
+
+/* Local imports */
 import '../styles/pages/About.css';
 
 function AboutPage() {

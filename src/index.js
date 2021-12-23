@@ -1,33 +1,32 @@
-import React from 'react';
-import { lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux';
+
+/* Redux imports */
 import { store, persistor } from './storage/store.js';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-
+/* React query imports */
 import { QueryClient, QueryClientProvider } from "react-query";
 
+/* Local imports */
 import Navigation from './views/components/navigation/Navigation.jsx';
-import NotFound from './views/pages/404';
+import './views/styles/body/Body.css';
+
 
 import reportWebVitals from './reportWebVitals';
 
-import AddPost from './views/pages/AddPost.jsx';
-
-const SignUp = lazy(() => import('./views/pages/SignUp'));
-const LogIn = lazy(() => import('./views/pages/LogIn'));
-
-const Blogposts = lazy(() => import('./views/pages/HomePage.jsx'))
-const Blogpost = lazy(() => import('./views/pages/Blogpost'));
-
-// const AddPost = import('./views/pages/AddPost.jsx')
-
-const ContactPage = lazy(() => import('./views/pages/Contactus'));
+/* Lazyloading pages */
+const AddPost = lazy(() => import('./views/pages/AddPost.jsx'));
 const AboutPage = lazy(() => import('./views/pages/About'));
-
+const Blogpost = lazy(() => import('./views/pages/Blogpost'));
+const Blogposts = lazy(() => import('./views/pages/HomePage.jsx'))
+const ContactPage = lazy(() => import('./views/pages/Contactus'));
+const LogIn = lazy(() => import('./views/pages/LogIn'));
+const NotFound = lazy(() => import('./views/pages/404'));
+const SignUp = lazy(() => import('./views/pages/SignUp'));
 
 
 const queryClient = new QueryClient({

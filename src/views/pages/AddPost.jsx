@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 /* Redux Imports */
 import { connect } from 'react-redux';
@@ -58,38 +58,41 @@ function AddPost({ author }) {
     return () => clearTimeout(timer);
   }, [showSnackbar, postStatus]);
 
-  async function submitData(post) {
+  const submitData = useCallback(async (post) => {
     await addPostViaAPI(post);
-  }
+  }, []);
 
-  async function onSubmit(data) {
-    setShowSnackbar(true);
+  const onSubmit = useCallback(
+    async ({ title, body }) => {
+      setShowSnackbar(true);
 
-    const post = {
-      userId: userId,
-      author: author.fullName,
-      id: postId,
-      title: data.title,
-      body: data.body,
-    };
+      const post = {
+        userId: userId,
+        author: author.fullName,
+        id: postId,
+        title: title,
+        body: body,
+      };
 
-    store.dispatch(addPost(post));
+      store.dispatch(addPost(post));
 
-    try {
-      await submitData(post);
-      setPostStatus({
-        status: 'Success! Post added',
-        btnColor: 'default',
-        disabled: true,
-      });
-    } catch (e) {
-      setPostStatus({
-        status: `'Error': ${e}`,
-        btnColor: 'secondary',
-        disabled: false,
-      });
-    }
-  }
+      try {
+        await submitData(post);
+        setPostStatus({
+          status: 'Success! Post added',
+          btnColor: 'default',
+          disabled: true,
+        });
+      } catch (e) {
+        setPostStatus({
+          status: `'Error': ${e}`,
+          btnColor: 'secondary',
+          disabled: false,
+        });
+      }
+    },
+    [author.fullName, postId, userId, submitData]
+  );
 
   return (
     <>
@@ -142,9 +145,7 @@ function AddPost({ author }) {
               actionType={SNACKBAR_SUCCCESS_MESSAGE_TYPE.ADD}
             />
           </div>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </form>
     </>
   );

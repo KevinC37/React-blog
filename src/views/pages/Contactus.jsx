@@ -9,10 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { TextField, Button } from '@material-ui/core';
 
 /* Local imports */
-import '../styles/body.css';
 import '../styles/pages/ContactUs.css';
-
-const EMAIL_TO = `m.cujba@yahoo.com`;
 
 function ContactPage() {
   const validationSchema = Yup.object().shape({
@@ -25,8 +22,9 @@ function ContactPage() {
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
 
-  function onSubmit(data) {
-    window.open(`mailto:${EMAIL_TO}?subject=${data.title}&body=${data.body}`);
+  function onSubmit({ title, body }) {
+    const emailTo = 'm.cujba@yahoo.com';
+    window.open(`mailto:${emailTo}?subject=${title}&body=${body}`);
   }
 
   return (

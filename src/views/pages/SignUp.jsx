@@ -1,45 +1,59 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { TextField, Button } from '@material-ui/core';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+/* React hook form imports*/
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+/* Redux imports */
+import { store } from '../../storage/store';
+
+/* MUI Imports */
+import { TextField, Button } from '@material-ui/core';
 import { Snackbar } from '@material-ui/core';
 
 /* Local imports */
-import { store } from '../../storage/store';
+//----React hook form //
 import signUpValidationSchema from '../../utils/formValidations/signUp';
+//----CSS Files //
 import '../styles/authPages/SignUp.css';
 
 export default function SignUp() {
+  const redirect = useNavigate();
+  let redirectTimer;
+  const [redirectToLogIn, setRedirectToLogIn] = useState(false);
+
   const formOptions = { resolver: yupResolver(signUpValidationSchema) };
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
 
   const [submitStatus, setSubmitStatus] = useState(false); //for triggering the 'Success' popup
 
-  const redirect = useNavigate();
-  let redirectTimer;
-
+  if (redirectToLogIn) {
+    redirectTimer = setTimeout(() => redirect('/login'), 2000);
+  }
   useEffect(() => {
     return () => clearTimeout(redirectTimer);
   }, [redirectTimer]);
 
-  function onSubmit(data) {
-    store.dispatch({
-      type: 'USER/SET_CREDENTIALS',
-      payload: {
-        auth: false,
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        password: data.password,
-      },
-    });
+  const onSubmit = useCallback(
+    (data) => {
+      store.dispatch({
+        type: 'USER/SET_CREDENTIALS',
+        payload: {
+          auth: false,
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          password: data.password,
+        },
+      });
 
-    setSubmitStatus(true);
-    redirectTimer = setTimeout(() => redirect('/login'), 2000);
-  }
+      setSubmitStatus(true);
+      setRedirectToLogIn(!redirectToLogIn);
+    },
+    [redirectToLogIn]
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form___main">

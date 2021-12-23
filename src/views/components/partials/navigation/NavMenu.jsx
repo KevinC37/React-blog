@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useEffect } from 'react';
+import React, { useState, forwardRef, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 /* Material UI Imports*/
@@ -10,14 +10,16 @@ import { Divider } from '@material-ui/core';
 import Logout from '@mui/icons-material/Logout';
 import Home from '@material-ui/icons/Home';
 
+/* Redux imports */
+import { store } from '../../../../storage/store';
+import { logOut } from '../../../../storage/actions';
+
 /* Local Imports*/
 import '../../../styles/navigation/Navigation.css';
-import { store } from '../../../../storage/store';
 
-export const NavMenu = forwardRef((props, ref) => {
+export const NavMenu = forwardRef(({ handleClose }, ref) => {
   const [anchorEl, setAnchorEl] = useState(ref);
   let open = Boolean(anchorEl);
-  let closeStatus = props.handleClose;
 
   useEffect(() => {
     setAnchorEl(ref);
@@ -27,12 +29,13 @@ export const NavMenu = forwardRef((props, ref) => {
     };
   }, [ref]);
 
-  const logOut = () => store.dispatch({ type: 'USER/LOG_OUT' });
+  const userLogOut = useCallback(() => store.dispatch(logOut), []);
+
   return (
     <Menu
       open={open}
       anchorEl={anchorEl}
-      onClick={closeStatus}
+      onClick={handleClose}
       disableScrollLock
     >
       <Link to="/">
@@ -55,7 +58,7 @@ export const NavMenu = forwardRef((props, ref) => {
 
       <Divider />
 
-      <MenuItem onClick={logOut}>
+      <MenuItem onClick={userLogOut}>
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>

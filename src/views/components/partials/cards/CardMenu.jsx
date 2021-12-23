@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
 /* Material UI Imports */
-import { MenuItem } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
 import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 
@@ -19,11 +19,12 @@ import SuccessSnackBar from '../../../../utils/CreateSuccessSnackBar';
 import API_DELETE_POST from '../../../../utils/api/removePost.js';
 
 export default function CardMenu(props) {
-  const busMenuState = props.busMenuState;
-  const menuState = props.menuState;
+  const reduxStore = useStore();
+  let snackbarTimer;
+  const { busMenuState, menuState, id: postId } = props;
+
   const [editModalState, setEditModalState] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
-  const reduxStore = useStore();
 
   const busEditModalState = useCallback(
     (e) => {
@@ -42,25 +43,23 @@ export default function CardMenu(props) {
   );
 
   useEffect(() => {
-    //initializing the timer to close snackbar
-    let timer;
-    if (showSnackbar) {
-      timer = setTimeout(
-        () => setShowSnackbar(false),
-        SNACKBAR_SUCCESS_TIMEOUT
-      );
-      console.log(showSnackbar);
-    }
-
-    //on unmount - clear the snackbar timer
-    return () => clearTimeout(timer);
-  }, [showSnackbar]);
+    return () => {
+      clearTimeout(snackbarTimer);
+    };
+  });
 
   const deletePost = useCallback(() => {
     API_DELETE_POST(props, reduxStore);
     setShowSnackbar(true);
   }, [props, reduxStore]);
 
+  //initializing the timer to close snackbar
+  if (showSnackbar) {
+    snackbarTimer = setTimeout(
+      () => setShowSnackbar(false),
+      SNACKBAR_SUCCESS_TIMEOUT
+    );
+  }
   return (
     <>
       <div hidden={!menuState}>
@@ -88,19 +87,15 @@ export default function CardMenu(props) {
             editModalState={editModalState}
             busEditModalState={(e) => busEditModalState(e)}
           />
-        ) : (
-          <></>
-        )}
+        ) : null}
       </div>
 
       {showSnackbar ? (
         <SuccessSnackBar
-          id={props.id}
+          id={postId}
           actionType={SNACKBAR_SUCCCESS_MESSAGE_TYPE.DELETE}
         />
-      ) : (
-        <></>
-      )}
+      ) : null}
     </>
   );
 }

@@ -12,7 +12,6 @@ import getObjectSize from '../../utils/objectUtils/getObjectSize.js';
 
 /* Local imports */
 import NotFound from './404.jsx';
-import '../styles/body.css';
 
 function Blogpost({ localPosts }) {
   const queryPostId = window.location.pathname.match(/\d+/)[0];

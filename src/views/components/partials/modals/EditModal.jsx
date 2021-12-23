@@ -21,15 +21,27 @@ import { editPost } from '../../../../storage/actions';
 import '../../../styles/modals/EditModal.css';
 import { Portal } from '../../../../utils/CreatePortal';
 
+/* Edit post modal --- patching the data */
+const updatePost = async (data) =>
+  await fetch(`https://jsonplaceholder.typicode.com/posts/${data.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
 export default function EditModal(props) {
   const reduxStore = useStore();
-  const title = capitalize(props.title);
-  const body = capitalize(props.body);
+
+  const { title: postTitle, body: postBody, id, busEditModalState } = props;
+  const title = capitalize(postTitle);
+  const body = capitalize(postBody);
+
   const [postStatus, setPostStatus] = useState({
     status: 'Update post',
     btnColor: 'primary',
   });
-  const busEditModalState = props.busEditModalState;
 
   /* EDIT MODAL VALIDATION */
   const validationSchema = Yup.object().shape({
@@ -43,26 +55,19 @@ export default function EditModal(props) {
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
 
-  /* Edit post modal --- patching the data */
-  const updatePost = async (data) =>
-    await fetch(`https://jsonplaceholder.typicode.com/posts/${props.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-  const handleForm = async (postToEdit) => {
-    postToEdit.id = props.id;
-    try {
-      await updatePost(postToEdit);
-      setPostStatus({ status: 'Success', btnColor: 'default' });
-      reduxStore.dispatch(editPost(postToEdit));
-    } catch (e) {
-      setPostStatus({ status: `'Error': ${e}`, btnColor: 'secondary' });
-    }
-  };
+  const handleForm = useCallback(
+    async (payload) => {
+      try {
+        const postToEdit = { ...payload, id };
+        await updatePost(postToEdit);
+        setPostStatus({ status: 'Success', btnColor: 'default' });
+        reduxStore.dispatch(editPost(postToEdit));
+      } catch (e) {
+        setPostStatus({ status: `'Error': ${e}`, btnColor: 'secondary' });
+      }
+    },
+    [id, reduxStore]
+  );
 
   /* Closing the modal */
   const handleClose = useCallback(
@@ -104,7 +109,7 @@ export default function EditModal(props) {
                 maxRows={2}
                 size="small"
               />
-              {errors.title ? <p>{errors.title?.message}</p> : <></>}
+              {errors.title ? <p>{errors.title?.message}</p> : null}
               <TextField
                 {...register('body')}
                 label="Body"
@@ -116,7 +121,7 @@ export default function EditModal(props) {
                 maxRows={10}
                 size="medium"
               />
-              {errors.body ? <p>{errors.body?.message}</p> : <></>}
+              {errors.body ? <p>{errors.body?.message}</p> : null}
               <Button
                 type="submit"
                 className="edit___modal___form___submit___button"

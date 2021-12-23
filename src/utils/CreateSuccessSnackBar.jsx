@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Snackbar, LinearProgress, Alert } from '@mui/material';
 import { Portal } from './CreatePortal';
 
-export default function SuccessSnackBar(props) {
+export default function SuccessSnackBar({ id, actionType }) {
   const [progress, setProgress] = useState(10);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function SuccessSnackBar(props) {
   }, []);
 
   return (
-    <Portal key={props.id}>
+    <Portal key={id}>
       <Snackbar
         sx={{ marginTop: '60px' }}
         open={true}
@@ -24,7 +24,7 @@ export default function SuccessSnackBar(props) {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert severity="success" sx={{ width: '100%' }}>
-          Post with id {props.id} has been {props.actionType} successfully!
+          Post with id {id} has been {actionType} successfully!
           <LinearProgress
             variant="determinate"
             color="success"

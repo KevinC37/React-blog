@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /* React forms imports */
@@ -9,30 +9,37 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { TextField, Button } from '@material-ui/core';
 import { Snackbar } from '@material-ui/core';
 
+/* Redux imports */
+import { store } from '../../storage/store';
+import { logIn } from '../../storage/actions';
+import logInValidationSchema from '../../utils/formValidations/logIn';
+
 /* Local imports */
 import '../styles/authPages/LogIn.css';
-import logInValidationSchema from '../../utils/formValidations/logIn';
-import { store } from '../../storage/store';
-import { useEffect } from 'react';
 
-function LogIn() {
+export default function LogIn() {
+  const redirect = useNavigate();
+  let redirectTimer;
+  const [redirectToHome, setRedirectToHome] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(false); //for triggering the Submit Status popup
+
   const formOptions = { resolver: yupResolver(logInValidationSchema) };
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
-  const redirect = useNavigate();
-  const [submitStatus, setSubmitStatus] = useState(false); //for triggering the 'Success' popup
 
-  let redirectTimer;
+  if (redirectToHome) {
+    redirectTimer = setTimeout(() => redirect('/'), 2000);
+  }
 
   useEffect(() => {
     return () => clearTimeout(redirectTimer);
   }, [redirectTimer]);
 
-  function onSubmit() {
-    store.dispatch({ type: 'USER/LOGIN' });
+  const onSubmit = useCallback(() => {
+    store.dispatch(logIn);
     setSubmitStatus(true);
-    redirectTimer = setTimeout(() => redirect('/'), 2000);
-  }
+    setRedirectToHome(!redirectToHome);
+  }, [redirectToHome]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form___main">
@@ -76,11 +83,7 @@ function LogIn() {
             message="Welcome!"
           />
         </div>
-      ) : (
-        ''
-      )}
+      ) : null}
     </form>
   );
 }
-
-export default LogIn;

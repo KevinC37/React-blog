@@ -43,9 +43,11 @@ const useStyles = makeStyles((theme) => ({
 
 function NavList({ authStatus, user }) {
   const classes = useStyles();
+
   const { firstName: userName } = user;
-  const reference = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const reference = useRef(null);
 
   useEffect(() => {}, [authStatus]);
 
@@ -55,7 +57,7 @@ function NavList({ authStatus, user }) {
     }
   }, []);
 
-  const handleClose = useCallback((e) => setAnchorEl(null), []);
+  const handleClose = useCallback(() => setAnchorEl(null), []);
 
   return (
     <ul className={classes.navlinks}>
@@ -67,7 +69,7 @@ function NavList({ authStatus, user }) {
             className={classes.user___profile}
           >
             <Avatar className="avatar" />
-            <span>{userName ? capitalize(userName) : ''}</span>
+            <span>{userName ? capitalize(userName) : null}</span>
             {anchorEl ? (
               <NavMenu handleClose={handleClose} ref={anchorEl} />
             ) : (
