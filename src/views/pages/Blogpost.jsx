@@ -19,6 +19,7 @@ function Blogpost({ localPosts }) {
   const currentLocalPost = localPosts
     .filter((post) => Number(post.id) === Number(queryPostId))
     .shift();
+
   const fetchPost = async () =>
     await (
       await fetch(`https://jsonplaceholder.typicode.com/posts/${queryPostId}`)
