@@ -16,14 +16,9 @@ import NotFound from './404.jsx';
 function Blogpost({ localPosts }) {
   const queryPostId = window.location.pathname.match(/\d+/)[0];
 
-  const currentLocalPost = useCallback(
-    () =>
-      localPosts
-        .filter((post) => Number(post.id) === Number(queryPostId))
-        .shift(),
-    [localPosts, queryPostId]
-  );
-
+  const currentLocalPost = localPosts
+    .filter((post) => Number(post.id) === Number(queryPostId))
+    .shift();
   const fetchPost = async () =>
     await (
       await fetch(`https://jsonplaceholder.typicode.com/posts/${queryPostId}`)
