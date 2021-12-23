@@ -11,15 +11,15 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 /* Utils imports */
-import capitalize from '../../../../utils/textFormatters/capitalize';
+import capitalize from '../../../../utils/textFormatters/capitalize.js';
 
 /* Redux imports */
 import { useStore } from 'react-redux';
-import { editPost } from '../../../../storage/actions';
+import { editPost } from '../../../../storage/actions/index.js';
 
 /* Local Imports */
 import '../../../styles/modals/EditModal.css';
-import { Portal } from '../../../../utils/CreatePortal';
+import Portal from '../../../../utils/CreatePortal.jsx';
 
 /* Edit post modal --- patching the data */
 const updatePost = async (data) =>

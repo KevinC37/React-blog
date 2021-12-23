@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 /* Local imports */
 import '../styles/pages/About.css';
 
-function AboutPage() {
+export default function AboutPage() {
   return (
     <div>
       <div className="hero___container">
@@ -56,5 +56,3 @@ function AboutPage() {
     </div>
   );
 }
-
-export default AboutPage;

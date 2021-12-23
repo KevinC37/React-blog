@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Snackbar, LinearProgress, Alert } from '@mui/material';
-import { Portal } from './CreatePortal';
+
+/* MUI Imports */
+import Snackbar from '@mui/material/Snackbar';
+import LinearProgress from '@mui/material/LinearProgress';
+import Alert from '@mui/material/Alert';
+
+/* Local imports */
+import Portal from './CreatePortal.jsx';
 
 export default function SuccessSnackBar({ id, actionType }) {
   const [progress, setProgress] = useState(10);

@@ -13,9 +13,9 @@ export const AddPost = data => ({
   payload: { author: data.author, title: data.title, body: data.body }
 });
 
-export const signUp = credentials => ({
-  type: 'USER/CRENEDTIALS',
-  payload: { auth: false, email: credentials.email, firstName: credentials.firstName, lastName: credentials.lastName, password: credentials.password }
+export const signUp = ({ email, firstName, lastName, password }) => ({
+  type: 'USER/SET_CREDENTIALS',
+  payload: { auth: false, email, firstName, lastName, password }
 });
 
 export const logIn = { type: 'USER/LOGIN' };
@@ -51,4 +51,6 @@ export const editPost = post => ({
     body: post.body,
   }
 });
+
+
 

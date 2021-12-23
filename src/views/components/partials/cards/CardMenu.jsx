@@ -9,13 +9,13 @@ import Edit from '@material-ui/icons/Edit';
 import { useStore } from 'react-redux';
 
 /* Global variable imports */
-import { SNACKBAR_SUCCESS_TIMEOUT } from '../../../../globalVars';
-import { SNACKBAR_SUCCCESS_MESSAGE_TYPE } from '../../../../globalVars';
+import { SNACKBAR_SUCCESS_TIMEOUT } from '../../../../globalVars/index.js';
+import { SNACKBAR_SUCCCESS_MESSAGE_TYPE } from '../../../../globalVars/index.js';
 
 /* Local Imports */
-import EditModal from '../modals/EditModal.jsx';
 import '../../../styles/components/cards/CardMenu.css';
-import SuccessSnackBar from '../../../../utils/CreateSuccessSnackBar';
+import EditModal from '../modals/EditModal.jsx';
+import SuccessSnackBar from '../../../../utils/CreateSuccessSnackBar.jsx';
 import API_DELETE_POST from '../../../../utils/api/removePost.js';
 
 export default function CardMenu(props) {

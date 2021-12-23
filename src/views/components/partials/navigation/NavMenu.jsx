@@ -11,8 +11,8 @@ import Logout from '@mui/icons-material/Logout';
 import Home from '@material-ui/icons/Home';
 
 /* Redux imports */
-import { store } from '../../../../storage/store';
-import { logOut } from '../../../../storage/actions';
+import { store } from '../../../../storage/store.js';
+import { logOut } from '../../../../storage/actions/index.js';
 
 /* Local Imports*/
 import '../../../styles/navigation/Navigation.css';

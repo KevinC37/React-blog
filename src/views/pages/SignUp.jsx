@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 /* Redux imports */
-import { store } from '../../storage/store';
+import { store } from '../../storage/store.js';
+import { signUp } from '../../storage/actions/index.js';
 
 /* MUI Imports */
 import TextField from '@material-ui/core/TextField';
@@ -15,7 +16,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 /* Local imports */
 //----Form validations //
-import signUpValidationSchema from '../../utils/formValidations/signUp';
+import signUpValidationSchema from '../../utils/formValidations/signUp.js';
 //----CSS Files //
 import '../styles/authPages/SignUp.css';
 
@@ -39,17 +40,7 @@ export default function SignUp() {
 
   const onSubmit = useCallback(
     (data) => {
-      store.dispatch({
-        type: 'USER/SET_CREDENTIALS',
-        payload: {
-          auth: false,
-          email: data.email,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          password: data.password,
-        },
-      });
-
+      store.dispatch(signUp(data));
       setSubmitStatus(true);
       setRedirectToLogIn(!redirectToLogIn);
     },

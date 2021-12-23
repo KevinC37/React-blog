@@ -14,10 +14,10 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 
 /* Util imports */
-import capitalize from '../../../../utils/textFormatters/capitalize';
+import capitalize from '../../../../utils/textFormatters/capitalize.js';
 
 /* Local imports */
-import CardMenu from './CardMenu';
+import CardMenu from './CardMenu.jsx';
 import stringToColor from '../../../../utils/stringToColor.js';
 
 const useStyles = makeStyles({

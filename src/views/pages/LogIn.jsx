@@ -11,12 +11,12 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 
 /* Redux imports */
-import { store } from '../../storage/store';
-import { logIn } from '../../storage/actions';
+import { store } from '../../storage/store.js';
+import { logIn } from '../../storage/actions/index.js';
 
 /* Local imports */
 //----Form validations //
-import logInValidationSchema from '../../utils/formValidations/logIn';
+import logInValidationSchema from '../../utils/formValidations/logIn.js';
 //----CSS Files //
 import '../styles/authPages/LogIn.css';
 

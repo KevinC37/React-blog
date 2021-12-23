@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { useQueries } from 'react-query';
 
 /* Redux imports */
-import { postsSelect } from '../../storage/selectors/postsSelector.js';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { postsSelect } from '../../storage/selectors/postsSelector.js';
 
 /* Utils import */
 import capitalize from '../../utils/textFormatters/capitalize.js';
@@ -16,9 +16,13 @@ import NotFound from './404.jsx';
 function Blogpost({ localPosts }) {
   const queryPostId = window.location.pathname.match(/\d+/)[0];
 
-  const currentLocalPost = localPosts
-    .filter((post) => Number(post.id) === Number(queryPostId))
-    .shift();
+  const currentLocalPost = useCallback(
+    () =>
+      localPosts
+        .filter((post) => Number(post.id) === Number(queryPostId))
+        .shift(),
+    [localPosts, queryPostId]
+  );
 
   const fetchPost = async () =>
     await (

@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 /* Local imports */
 import '../styles/pages/ContactUs.css';
 
-function ContactPage() {
+export default function ContactPage() {
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Please fill this field'),
     body: Yup.string().required('Please fill this field'),
@@ -65,5 +65,3 @@ function ContactPage() {
     </form>
   );
 }
-
-export default ContactPage;

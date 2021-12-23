@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-export const Portal = ({ children, className = 'root-portal', el = 'div' }) => {
+export default function Portal({
+  children,
+  className = 'root-portal',
+  el = 'div',
+}) {
   const [container] = React.useState(() => {
     return document.createElement(el);
   });
@@ -16,4 +20,4 @@ export const Portal = ({ children, className = 'root-portal', el = 'div' }) => {
   }, [className, container]);
 
   return ReactDOM.createPortal(children, container);
-};
+}
