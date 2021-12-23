@@ -20,13 +20,13 @@ import reportWebVitals from './reportWebVitals';
 
 /* Lazyloading pages */
 const AddPost = lazy(() => import('./views/pages/AddPost.jsx'));
-const AboutPage = lazy(() => import('./views/pages/About'));
-const Blogpost = lazy(() => import('./views/pages/Blogpost'));
+const AboutPage = lazy(() => import('./views/pages/About.jsx'));
+const Blogpost = lazy(() => import('./views/pages/Blogpost.jsx'));
 const Blogposts = lazy(() => import('./views/pages/HomePage.jsx'))
-const ContactPage = lazy(() => import('./views/pages/ContactUs'));
-const LogIn = lazy(() => import('./views/pages/LogIn'));
-const NotFound = lazy(() => import('./views/pages/404'));
-const SignUp = lazy(() => import('./views/pages/SignUp'));
+const ContactPage = lazy(() => import('./views/pages/ContactUs.jsx'));
+const LogIn = lazy(() => import('./views/pages/LogIn.jsx'));
+const NotFound = lazy(() => import('./views/pages/404.jsx'));
+const SignUp = lazy(() => import('./views/pages/SignUp.jsx'));
 
 
 const queryClient = new QueryClient({
