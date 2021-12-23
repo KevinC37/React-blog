@@ -7,8 +7,8 @@ import { createStructuredSelector } from 'reselect';
 import capitalize from '../../../../utils/textFormatters/capitalize.js';
 
 /* Material UI Imports*/
-import { makeStyles } from '@material-ui/core';
-import { Avatar } from '@mui/material';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Avatar from '@material-ui/core/Avatar';
 
 /* Local imports */
 import { NavMenu } from './NavMenu.jsx';
@@ -72,9 +72,7 @@ function NavList({ authStatus, user }) {
             <span>{userName ? capitalize(userName) : null}</span>
             {anchorEl ? (
               <NavMenu handleClose={handleClose} ref={anchorEl} />
-            ) : (
-              <></>
-            )}
+            ) : null}
           </div>
         ) : authStatus === 'LOG_IN' ? (
           <Link to="/login" className={classes.link}>

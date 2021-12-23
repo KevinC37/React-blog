@@ -56,7 +56,7 @@ function AddPost({ author }) {
 
     //on unmount - clear the timer
     return () => clearTimeout(timer);
-  }, [showSnackbar, postStatus]);
+  }, [showSnackbar]);
 
   const submitData = useCallback(async (post) => {
     await addPostViaAPI(post);

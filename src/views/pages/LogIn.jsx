@@ -6,15 +6,18 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 /* Material UI Imports */
-import { TextField, Button } from '@material-ui/core';
-import { Snackbar } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 
 /* Redux imports */
 import { store } from '../../storage/store';
 import { logIn } from '../../storage/actions';
-import logInValidationSchema from '../../utils/formValidations/logIn';
 
 /* Local imports */
+//----Form validations //
+import logInValidationSchema from '../../utils/formValidations/logIn';
+//----CSS Files //
 import '../styles/authPages/LogIn.css';
 
 export default function LogIn() {

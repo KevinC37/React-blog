@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, memo } from 'react';
 import { useQueries } from 'react-query';
 
 /* Material UI Imports */
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
 /* Redux Imports */
 import { connect } from 'react-redux';

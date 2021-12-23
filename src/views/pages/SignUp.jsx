@@ -9,11 +9,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { store } from '../../storage/store';
 
 /* MUI Imports */
-import { TextField, Button } from '@material-ui/core';
-import { Snackbar } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 
 /* Local imports */
-//----React hook form //
+//----Form validations //
 import signUpValidationSchema from '../../utils/formValidations/signUp';
 //----CSS Files //
 import '../styles/authPages/SignUp.css';

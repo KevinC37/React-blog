@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 
 /* Material UI Imports */
-import { TextField } from '@material-ui/core';
-import { Button } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import Close from '@material-ui/icons/Close';
 
 /* React hook form imports */

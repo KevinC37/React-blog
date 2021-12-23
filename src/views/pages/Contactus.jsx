@@ -6,7 +6,8 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 /* Material UI Imports */
-import { TextField, Button } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 /* Local imports */
 import '../styles/pages/ContactUs.css';
