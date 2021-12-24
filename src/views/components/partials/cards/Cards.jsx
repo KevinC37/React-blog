@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 /* Material UI Imports */
@@ -39,16 +39,17 @@ const useStyles = makeStyles({
 
 function CardTemplate(props) {
   const styles = useStyles({});
-  const { user, id, title } = props;
+  const { user, id, title } = useMemo(() => props, [props]);
   const [menuState, setMenuState] = useState(false);
   const [companyName, setCompanyName] = useState('');
-  useEffect(() => {
+
+  const setCompany = useMemo(() => {
     if (typeof user.company !== 'undefined') {
-      return setCompanyName(user.company.name);
+      setCompanyName(user.company.name);
     } else {
-      return setCompanyName('Terranet');
+      setCompanyName('Terranet');
     }
-  }, [user]);
+  }, [user.company]);
 
   const avatarBgColor = useCallback((name) => {
     try {

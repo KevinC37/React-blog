@@ -14,7 +14,10 @@ import getObjectSize from '../../utils/objectUtils/getObjectSize.js';
 import NotFound from './404.jsx';
 
 function Blogpost({ localPosts }) {
-  const queryPostId = window.location.pathname.match(/\d+/).shift();
+  const queryPostId = useMemo(
+    () => window.location.pathname.match(/\d+/).shift(),
+    []
+  );
 
   const currentLocalPost = useMemo(
     () => localPosts.find((post) => Number(post.id) === Number(queryPostId)),

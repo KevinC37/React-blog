@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 /* React forms imports */
 import { useForm } from 'react-hook-form';
@@ -23,10 +23,10 @@ export default function ContactPage() {
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
 
-  function onSubmit({ title, body }) {
+  const onSubmit = useCallback(({ title, body }) => {
     const emailTo = 'm.cujba@yahoo.com';
     window.open(`mailto:${emailTo}?subject=${title}&body=${body}`);
-  }
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form___main">

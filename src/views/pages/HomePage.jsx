@@ -17,23 +17,24 @@ const loadPosts = async () =>
 const loadUsers = async () =>
   await (await fetch(`https://jsonplaceholder.typicode.com/users/`)).json();
 
-function linkUserToPost(posts, users) {
-  if (posts.isSuccess && users.isSuccess) {
-    return posts.data.forEach((post) => {
-      users.data.forEach((user) => {
-        if (user.id === post.userId) post.user = user || '';
-      });
-    });
-  } else {
-    return;
-  }
-}
-
+//Blogposts component (homepage)
 function MemoizedBlogposts({ localPosts }) {
   const [posts, users] = useQueries([
     { queryKey: 'posts', queryFn: loadPosts },
     { queryKey: 'users', queryFn: loadUsers },
   ]);
+
+  const linkUserToPost = useCallback((posts, users) => {
+    if (posts.isSuccess && users.isSuccess) {
+      return posts.data.forEach((post) => {
+        users.data.forEach((user) => {
+          if (user.id === post.userId) post.user = user || '';
+        });
+      });
+    } else {
+      return;
+    }
+  }, []);
 
   //Wait for the posts coming from API to load and concats the incoming data with local storage posts
   const loadAllPosts = useCallback(() => {
@@ -51,7 +52,7 @@ function MemoizedBlogposts({ localPosts }) {
     }
 
     return mergedPosts;
-  }, [users, posts, localPosts]);
+  }, [users, posts, localPosts, linkUserToPost]);
 
   const allPosts = useMemo(() => loadAllPosts(), [loadAllPosts]);
 
