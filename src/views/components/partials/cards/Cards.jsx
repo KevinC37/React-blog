@@ -43,7 +43,8 @@ function CardTemplate(props) {
   const [menuState, setMenuState] = useState(false);
   const [companyName, setCompanyName] = useState('');
 
-  const setCompany = useMemo(() => {
+  //Attaches user's company name to the blogpost card
+  useMemo(() => {
     if (typeof user.company !== 'undefined') {
       setCompanyName(user.company.name);
     } else {
