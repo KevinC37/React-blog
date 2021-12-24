@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useQueries } from 'react-query';
 
 /* Redux imports */
@@ -16,9 +16,10 @@ import NotFound from './404.jsx';
 function Blogpost({ localPosts }) {
   const queryPostId = window.location.pathname.match(/\d+/).shift();
 
-  const currentLocalPost = localPosts
-    .filter((post) => Number(post.id) === Number(queryPostId))
-    .shift();
+  const currentLocalPost = useMemo(
+    () => localPosts.find((post) => Number(post.id) === Number(queryPostId)),
+    [localPosts, queryPostId]
+  );
 
   const fetchPost = async () =>
     await (
@@ -48,7 +49,7 @@ function Blogpost({ localPosts }) {
       {currentLocalPost ? (
         <div>
           <h1>{formatText(currentLocalPost.title)}</h1>
-          <p>Author: {currentLocalPost.user.name}</p>
+          <p>Author: {currentLocalPost.user?.name}</p>
           <p>{formatText(currentLocalPost.body)}</p>
         </div>
       ) : post.isFetching ? (
