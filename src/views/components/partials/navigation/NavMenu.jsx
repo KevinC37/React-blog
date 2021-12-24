@@ -38,7 +38,7 @@ export const NavMenu = forwardRef(({ handleClose }, ref) => {
       onClick={handleClose}
       disableScrollLock
     >
-      <Link to="/">
+      <Link to="/blog">
         <MenuItem>
           <ListItemIcon>
             <Home />
@@ -47,7 +47,7 @@ export const NavMenu = forwardRef(({ handleClose }, ref) => {
         </MenuItem>
       </Link>
 
-      <Link to="/add-post">
+      <Link to="/blog/add-post">
         <MenuItem>
           <ListItemIcon>
             <Add />

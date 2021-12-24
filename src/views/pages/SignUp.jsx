@@ -32,7 +32,7 @@ export default function SignUp() {
   const [submitStatus, setSubmitStatus] = useState(false); //for triggering the 'Success' popup
 
   if (redirectToLogIn) {
-    redirectTimer = setTimeout(() => redirect('/login'), 2000);
+    redirectTimer = setTimeout(() => redirect('/blog/login'), 2000);
   }
   useEffect(() => {
     return () => clearTimeout(redirectTimer);

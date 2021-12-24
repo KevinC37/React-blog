@@ -75,22 +75,22 @@ function NavList({ authStatus, user }) {
             ) : null}
           </div>
         ) : authStatus === 'LOG_IN' ? (
-          <Link to="/login" className={classes.link}>
+          <Link to="/blog/login" className={classes.link}>
             Log in
           </Link>
         ) : (
-          <Link to="/signup" className={classes.link}>
+          <Link to="/blog/signup" className={classes.link}>
             Sign up
           </Link>
         )}
       </li>
       <li>
-        <Link to="/about" className={classes.link}>
+        <Link to="/blog/about" className={classes.link}>
           About
         </Link>
       </li>
       <li>
-        <Link to="/contact" className={classes.link}>
+        <Link to="/blog/contact" className={classes.link}>
           Contact Us
         </Link>
       </li>

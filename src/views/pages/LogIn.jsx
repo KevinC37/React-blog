@@ -31,7 +31,7 @@ export default function LogIn() {
   const { errors } = formState;
 
   if (redirectToHome) {
-    redirectTimer = setTimeout(() => redirect('/'), 2000);
+    redirectTimer = setTimeout(() => redirect('/blog/'), 2000);
   }
 
   useEffect(() => {

@@ -13,9 +13,9 @@
 
 .hero___background___image {
   min-width: 5rem;
-  min-height: 5rem;
+  min-height: 350px;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 450px;
 }
 
 .hero___title {

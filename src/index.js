@@ -51,13 +51,13 @@ ReactDOM.render(
             <Navigation />
             <Routes>
               <Route path="*" element={<NotFound />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/login" element={<LogIn />} />
-              <Route exact path="/" element={<Blogposts />} />
-              <Route exact path="/about" element={<AboutPage />} />
-              <Route exact path="/contact" element={<ContactPage />} />
-              <Route path="/posts/:slug" element={<Blogpost />} />
-              <Route path="/add-post" element={<AddPost />} />
+              <Route path="/blog/signup" element={<SignUp />} />
+              <Route path="/blog/login" element={<LogIn />} />
+              <Route exact path="/blog/" element={<Blogposts />} />
+              <Route exact path="/blog/about" element={<AboutPage />} />
+              <Route exact path="/blog/contact" element={<ContactPage />} />
+              <Route path="/blog/posts/:slug" element={<Blogpost />} />
+              <Route path="/blog/add-post" element={<AddPost />} />
             </Routes>
           </PersistGate>
         </BrowserRouter>

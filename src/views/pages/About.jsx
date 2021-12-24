@@ -48,7 +48,7 @@ export default function AboutPage() {
       <div className="connect___conainer">
         <div className="connect___wrapper">
           <h1>Let's Connect</h1>
-          <Link to="/contact">
+          <Link to="/blog/contact">
             <h3 className="contact___us">Contact us</h3>
           </Link>
         </div>

@@ -100,7 +100,7 @@ function CardTemplate(props) {
           }
         />
 
-        <Link to={`/posts/${id}`}>
+        <Link to={`/blog/posts/${id}`}>
           <CardActionArea>
             <CardContent>
               <Typography
